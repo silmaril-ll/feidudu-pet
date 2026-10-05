@@ -1,0 +1,12 @@
+# 自己那只肥嘟嘟吃了几片叶子，每台电脑各记各的
+feidudu_save.json
+__pycache__/
+*.pyc
+# 画帧时自动下载的字体，不用进仓库
+art-source/LongCang.ttf
+feidudu_error.log
+# 启动时自动生成的快捷方式（里面是这台电脑上的路径）
+肥嘟嘟.lnk
+feidudu_crash.log
+# 自己调的数字（盖过 feidudu_pet/config.py 里的），每台电脑各调各的
+my_config.py

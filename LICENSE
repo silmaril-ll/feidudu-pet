@@ -1,0 +1,39 @@
+肥嘟嘟桌宠 · FeiDuDu Desktop Pet
+================================
+
+这个项目分两部分授权 / This project is licensed in two parts:
+
+1. 代码 / Code — MIT License (below)
+   feidudu.pyw、feidudu_pet/ 里的所有文件、art-source/lib_pet.js（蜡笔画笔）、art-source/runpet.py
+   feidudu.pyw, everything in feidudu_pet/, art-source/lib_pet.js (the crayon renderer), art-source/runpet.py
+
+2. 肥嘟嘟的形象和画 / FeiDuDu's character and artwork — CC BY-NC 4.0, see LICENSE-ART.md
+   sprites/、docs/、feidudu_icon.ico，以及 art-source/ 里其余的文件（肥嘟嘟、饰品、叶子、输入法皮肤、菜单的画法）
+   sprites/, docs/, feidudu_icon.ico, and the rest of art-source/ (how FeiDuDu, accessories, leaves, the IME skin and menus are drawn)
+
+泡泡里的字体龙藏体 Long Cang 不在仓库里（画帧时自动下载），它用的是 SIL Open Font License。
+The Long Cang font used in speech bubbles is not included (it is downloaded when rendering) and is under the SIL Open Font License.
+
+--------------------------------------------------------------------------------
+
+MIT License
+
+Copyright (c) 2026 Silmaril
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
