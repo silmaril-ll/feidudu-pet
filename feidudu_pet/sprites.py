@@ -6,6 +6,7 @@ from PyQt6.QtCore import QPointF, QRectF
 from PyQt6.QtGui import QIcon, QPixmap
 
 from .config import SPRITES
+from .lang import EN
 
 
 @dataclass
@@ -28,15 +29,17 @@ class Sprites:
                 anchor=QPointF(a["anchor"][0] / r, a["anchor"][1] / r),
                 bbox=QRectF(x0 / r, y0 / r, (x1 - x0) / r, (y1 - y0) / r),
             )
-        self.bubbles = {name: self._load(f) for name, f in info["bubbles"].items()}
+        bubbles = info["bubbles_en"] if EN and "bubbles_en" in info else info["bubbles"]    # 英文界面用英文泡泡
+        self.bubbles = {name: self._load(f) for name, f in bubbles.items()}
         self.frass = self._load(info["frass"])                    # 一颗便便
         # 小卖部（货架在 art-source/items.js）：饰品是每个动作上面的一层，叶子是吃的时候垫在下面的一层
         self.shop = info["shop"]
         #   这两种画面只存了有画的那一块：每帧是 (画面, 放在哪)
-        self.accessories = {name: {"label": a["label"], "price": a["price"],
+        self.accessories = {name: {"label": a.get("label_en", a["label"]) if EN else a["label"], "price": a["price"],
                                    "anims": {anim: [self._layer(f) for f in files] for anim, files in a["anims"].items()}}
                             for name, a in info["accessories"].items()}
-        self.leaves = {name: dict(leaf, name=name, frames=[self._layer(f) for f in leaf["files"]])
+        self.leaves = {name: dict(leaf, name=name, label=leaf.get("label_en", leaf["label"]) if EN else leaf["label"],
+                                  frames=[self._layer(f) for f in leaf["files"]])
                        for name, leaf in info["leaves"].items()}
         self.sparkles = [self._load(f) for f in info["sparkles"]]      # 金叶子：身边的小星星
         self.scents = [self._load(f) for f in info["scents"]]          # 芸香叶：飘起来的香味

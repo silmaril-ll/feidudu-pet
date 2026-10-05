@@ -4,6 +4,7 @@ __pycache__/
 *.pyc
 # 画帧时自动下载的字体，不用进仓库
 art-source/LongCang.ttf
+art-source/PatrickHand.ttf
 feidudu_error.log
 # 启动时自动生成的快捷方式（里面是这台电脑上的路径）
 肥嘟嘟.lnk

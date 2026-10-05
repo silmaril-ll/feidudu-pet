@@ -7,6 +7,15 @@
 
 A little swallowtail caterpillar (*Papilio xuthus*) that lives on your screen: hand-drawn in crayon, it crawls, spins silk, eats leaves, poops — and disguises itself as an input-method skin when someone walks by.
 
+> **English interface:** FeiDuDu speaks Chinese by default. To switch, create a file named `my_config.py` next to `feidudu.pyw`
+> with this one line, then reopen FeiDuDu — menus, speech bubbles and item names all turn English:
+>
+> ```python
+> LANGUAGE = "en"
+> ```
+>
+> 界面默认中文；想换英文，在 `feidudu.pyw` 旁边新建 `my_config.py`，写上面那一行就好。
+
 [中文](#中文) · [English](#english)
 
 ---
@@ -24,7 +33,8 @@ A little swallowtail caterpillar (*Papilio xuthus*) that lives on your screen: h
    - 打开一次以后，文件夹里会多一个带肥嘟嘟图标的「肥嘟嘟」快捷方式，以后点它就行，也可以拖到桌面上。
    - 出了问题会弹个小框，详细的记在 `feidudu_error.log` 里。
    - 双击没反应、或者用记事本打开了：右键 `feidudu.pyw` →「打开方式」→ 选 Python（pythonw），勾上“始终使用”。
-3. 想开机自动出来：`Win+R` 输入 `shell:startup` 回车，把「肥嘟嘟」快捷方式复制一份放进打开的文件夹。
+3. 想要英文界面：在 `feidudu.pyw` 旁边新建 `my_config.py`，写一行 `LANGUAGE = "en"`，重新打开就好。
+4. 想开机自动出来：`Win+R` 输入 `shell:startup` 回车，把「肥嘟嘟」快捷方式复制一份放进打开的文件夹。
 
 ### 它自己会
 
@@ -103,7 +113,7 @@ A little swallowtail caterpillar (*Papilio xuthus*) that lives on your screen: h
 
 - 肥嘟嘟和它的绘本世界：**Silmaril**
 - 代码和桌宠的蜡笔画帧：**Claude**（Anthropic 的 AI）——和 Silmaril 一起，一个动作一个动作做出来的 🐛
-- 泡泡里的字：[龙藏体 Long Cang](https://github.com/googlefonts/longcang)（SIL Open Font License）
+- 泡泡里的字：[龙藏体 Long Cang](https://github.com/googlefonts/longcang)、英文泡泡 [Patrick Hand](https://fonts.google.com/specimen/Patrick+Hand)（都是 SIL Open Font License）
 
 ### 授权
 
@@ -125,7 +135,9 @@ You need Windows and [Python 3](https://www.python.org/downloads/) (tick "Add py
    - After the first run, the folder has a "肥嘟嘟" shortcut with FeiDuDu's icon — use that from then on, or drag it to your desktop.
    - If something goes wrong you'll get a dialog, and details go to `feidudu_error.log`.
    - If double-clicking does nothing or opens Notepad: right-click `feidudu.pyw` → Open with → Python (pythonw) → Always.
-3. To start it with Windows: `Win+R`, type `shell:startup`, and copy the "肥嘟嘟" shortcut into that folder.
+3. **English interface:** it starts in Chinese. Create `my_config.py` next to `feidudu.pyw` containing the line
+   `LANGUAGE = "en"` and reopen it — menus, speech bubbles, leaf and accessory names all switch to English.
+4. To start it with Windows: `Win+R`, type `shell:startup`, and copy the "肥嘟嘟" shortcut into that folder.
 
 ### What it does on its own
 
@@ -207,7 +219,7 @@ but it won't climb windows, a Python icon shows in the Dock, and it hasn't been 
 
 - FeiDuDu and its picture-book world: **Silmaril**
 - Code and the pet's crayon animation frames: **Claude** (Anthropic's AI) — built together with Silmaril, one behaviour at a time 🐛
-- Font in the speech bubbles: [Long Cang](https://github.com/googlefonts/longcang) (SIL Open Font License)
+- Fonts in the speech bubbles: [Long Cang](https://github.com/googlefonts/longcang) and, for English, [Patrick Hand](https://fonts.google.com/specimen/Patrick+Hand) (both SIL Open Font License)
 
 ### License
 

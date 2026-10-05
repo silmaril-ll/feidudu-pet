@@ -15,6 +15,7 @@ PyQt6 写的 Windows 桌宠。`feidudu.pyw` 是启动器（双击就开：先看
 | `feidudu_pet/world.py` | 各个“面”：怎么沿着爬、到头怎么转弯、从哪吐丝、落在哪 |
 | `feidudu_pet/behaviors/` | **一个动作一个文件**（idle、crawl、wave、wiggle、angry、snake、sleep、munch、nibble、refuse、frass、hang、lifted、tug、pupa、butterfly、approach、cling、comfy、look、peek） |
 | `feidudu_pet/senses.py` | 肥嘟嘟的感觉：每拍看鼠标在哪、多快（`pet.senses.cursor` / `speed`），鼠标键按没按着（`pressed`、`pressed_at`），人多久没碰电脑（`idle`、`away`），在不在忙（`busy`、`busy_since`、`done_busy`） |
+| `feidudu_pet/lang.py` | 界面语言（`config.LANGUAGE`，"zh" 默认 / "en"）：菜单上的字写成 `tr("中文", "English")`；泡泡、叶子饰品名字是画好的，`sprites.py` 按语言挑 |
 | `feidudu_pet/clock.py` | 肥嘟嘟看的钟（`config.TIMEZONE`）：按时间打招呼、晚上犯困 |
 | `feidudu_pet/win32.py` | 只有这里碰 Windows API（找活动窗口、不抢焦点、伪装快捷键 `GlobalHotkey`、人多久没碰电脑 `idle_seconds`、鼠标键按没按着 `buttons_down`、最前面是哪个程序 `foreground_app`） |
 | `feidudu_pet/silk.py` | 画那根丝的透明小窗口 |
@@ -29,7 +30,7 @@ PyQt6 写的 Windows 桌宠。`feidudu.pyw` 是启动器（双击就开：先看
 
 ## 加一个饰品 / 一种叶子
 
-在 `art-source/items.js` 的 `ACCESSORIES` 或 `LEAVES` 里加一项（照着已有的抄），跑 `art-source/runpet.py`。
+在 `art-source/items.js` 的 `ACCESSORIES` 或 `LEAVES` 里加一项（照着已有的抄，`label` 中文名、`en` 英文名都要写），跑 `art-source/runpet.py`。
 删掉一项同理。叶子想要新的特别效果：在 `feidudu_pet/effects.py` 写个函数加进 `EFFECTS`，叶子里写 `effect: '名字'`。
 
 ## 加一个新动作
@@ -133,6 +134,15 @@ PyQt6 写的 Windows 桌宠。`feidudu.pyw` 是启动器（双击就开：先看
 13. 打游戏自己去睡：`foreground_app` 读不读得到游戏的程序名（反作弊可能挡住，就用 `GAME_TITLES`）
 
 （摸摸、摸睡着、拖窗口抓紧、看鼠标、走开再回来（睡着的会醒、说“你回来啦”）已经在 Windows 上试过，能用。两块屏幕的情况暂时没法试。）
+
+## 中英文
+
+界面默认中文，`my_config.py` 里 `LANGUAGE = "en"` 换英文（启动器 `feidudu.pyw` 自己读这一行，弹的小框也跟着换）。
+- 菜单、托盘、提示：代码里写 `tr("中文", "English")`（`lang.py`），新加的字都要两种都写
+- 泡泡：`pet.js` 的 `bubbles` 列表是中文（龙藏体），`BUBBLES_EN` 是英文（Patrick Hand，宽度按字自动算），加泡泡两边都要加，少了 runpet 会报错；
+  存成 `bubble_名字.png` / `bubble_en_名字.png`，`sprites.json` 里是 `bubbles` / `bubbles_en`
+- 叶子和饰品的名字：`items.js` 的 `label` / `en`，`sprites.json` 里是 `label` / `label_en`
+- 伪装的输入法皮肤（中/英、全半角）故意不翻，它本来就是装成中文输入法
 
 ## 授权
 

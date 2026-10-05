@@ -6,6 +6,7 @@ from PyQt6.QtCore import QPointF
 
 from . import register
 from .base import Behavior
+from ..lang import tr
 from .. import world
 from ..save import write_save
 
@@ -50,4 +51,5 @@ class Frass(Behavior):
         return self.anim, i, QPointF(pet.ax, pet.ay), deg, mirrored
 
     def menu_items(self, pet):
-        return [(f"把便便都捡起来（花肥攒了 {pet.save.get('frass', 0)} 颗）", pet.pick_all_frass)]
+        return [(tr(f"把便便都捡起来（花肥攒了 {pet.save.get('frass', 0)} 颗）",
+                f"Pick up all the frass ({pet.save.get('frass', 0)} saved)"), pet.pick_all_frass)]

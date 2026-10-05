@@ -469,12 +469,70 @@
   "leaf_gold": "bubble_leaf_gold.png",
   "leaf_dream": "bubble_leaf_dream.png"
  },
+ "bubbles_en": {
+  "leaf_citrus": "bubble_en_leaf_citrus.png",
+  "leaf_zanthoxylum": "bubble_en_leaf_zanthoxylum.png",
+  "leaf_pomelo": "bubble_en_leaf_pomelo.png",
+  "leaf_kumquat": "bubble_en_leaf_kumquat.png",
+  "leaf_trifoliate": "bubble_en_leaf_trifoliate.png",
+  "leaf_sansho": "bubble_en_leaf_sansho.png",
+  "leaf_lemon": "bubble_en_leaf_lemon.png",
+  "leaf_rue": "bubble_en_leaf_rue.png",
+  "leaf_phellodendron": "bubble_en_leaf_phellodendron.png",
+  "leaf_maple": "bubble_en_leaf_maple.png",
+  "leaf_gold": "bubble_en_leaf_gold.png",
+  "leaf_dream": "bubble_en_leaf_dream.png",
+  "hum": "bubble_en_hum.png",
+  "niu": "bubble_en_niu.png",
+  "zz": "bubble_en_zz.png",
+  "burp": "bubble_en_burp.png",
+  "yum": "bubble_en_yum.png",
+  "dots": "bubble_en_dots.png",
+  "hi": "bubble_en_hi.png",
+  "nope": "bubble_en_nope.png",
+  "aah": "bubble_en_aah.png",
+  "zip": "bubble_en_zip.png",
+  "heave": "bubble_en_heave.png",
+  "hmm": "bubble_en_hmm.png",
+  "pu": "bubble_en_pu.png",
+  "back": "bubble_en_back.png",
+  "pretty": "bubble_en_pretty.png",
+  "tingly": "bubble_en_tingly.png",
+  "shiny": "bubble_en_shiny.png",
+  "sleepy": "bubble_en_sleepy.png",
+  "dream": "bubble_en_dream.png",
+  "full": "bubble_en_full.png",
+  "stuffed": "bubble_en_stuffed.png",
+  "hiss": "bubble_en_hiss.png",
+  "hello": "bubble_en_hello.png",
+  "sour": "bubble_en_sour.png",
+  "asleep": "bubble_en_asleep.png",
+  "fragrant": "bubble_en_fragrant.png",
+  "picky": "bubble_en_picky.png",
+  "rutaceae": "bubble_en_rutaceae.png",
+  "take_away": "bubble_en_take_away.png",
+  "better": "bubble_en_better.png",
+  "morning": "bubble_en_morning.png",
+  "noon": "bubble_en_noon.png",
+  "afternoon": "bubble_en_afternoon.png",
+  "evening": "bubble_en_evening.png",
+  "late": "bubble_en_late.png",
+  "welcome": "bubble_en_welcome.png",
+  "reach": "bubble_en_reach.png",
+  "startle": "bubble_en_startle.png",
+  "done": "bubble_en_done.png",
+  "rest": "bubble_en_rest.png",
+  "busy": "bubble_en_busy.png",
+  "comfy": "bubble_en_comfy.png",
+  "phew": "bubble_en_phew.png"
+ },
  "shop": {
   "gacha_price": 5
  },
  "accessories": {
   "cat_ears": {
    "label": "猫耳头箍",
+   "label_en": "Cat ears",
    "price": 12,
    "anims": {
     "crawl": [
@@ -1232,6 +1290,7 @@
   },
   "flowers": {
    "label": "花环",
+   "label_en": "Flower crown",
    "price": 15,
    "anims": {
     "crawl": [
@@ -1989,6 +2048,7 @@
   },
   "tophat": {
    "label": "小礼帽",
+   "label_en": "Top hat",
    "price": 18,
    "anims": {
     "crawl": [
@@ -2746,6 +2806,7 @@
   },
   "bunny_ears": {
    "label": "兔耳头箍",
+   "label_en": "Bunny ears",
    "price": 12,
    "anims": {
     "crawl": [
@@ -3503,6 +3564,7 @@
   },
   "bear_ears": {
    "label": "熊耳头箍",
+   "label_en": "Bear ears",
    "price": 12,
    "anims": {
     "crawl": [
@@ -4260,6 +4322,7 @@
   },
   "antennae": {
    "label": "触角发箍",
+   "label_en": "Bobble antennae",
    "price": 10,
    "anims": {
     "crawl": [
@@ -5017,6 +5080,7 @@
   },
   "glasses": {
    "label": "玳瑁眼镜",
+   "label_en": "Tortoiseshell glasses",
    "price": 14,
    "anims": {
     "crawl": [
@@ -5774,6 +5838,7 @@
   },
   "straw_hat": {
    "label": "小草帽",
+   "label_en": "Straw hat",
    "price": 16,
    "anims": {
     "crawl": [
@@ -6531,6 +6596,7 @@
   },
   "scarf": {
    "label": "小围巾",
+   "label_en": "Scarf",
    "price": 14,
    "anims": {
     "crawl": [
@@ -7288,6 +7354,7 @@
   },
   "xmas_hat": {
    "label": "圣诞帽",
+   "label_en": "Christmas hat",
    "price": 18,
    "anims": {
     "crawl": [
@@ -8045,6 +8112,7 @@
   },
   "party_hat": {
    "label": "生日帽",
+   "label_en": "Party hat",
    "price": 12,
    "anims": {
     "crawl": [
@@ -8802,6 +8870,7 @@
   },
   "bow": {
    "label": "蝴蝶结",
+   "label_en": "Bow",
    "price": 10,
    "anims": {
     "crawl": [
@@ -9559,6 +9628,7 @@
   },
   "orange_clip": {
    "label": "小橘子发卡",
+   "label_en": "Orange hair clip",
    "price": 10,
    "anims": {
     "crawl": [
@@ -10316,6 +10386,7 @@
   },
   "lemon_clip": {
    "label": "小柠檬发卡",
+   "label_en": "Lemon hair clip",
    "price": 10,
    "anims": {
     "crawl": [
@@ -11073,6 +11144,7 @@
   },
   "backpack": {
    "label": "小书包",
+   "label_en": "Backpack",
    "price": 16,
    "anims": {
     "crawl": [
@@ -11830,6 +11902,7 @@
   },
   "crown": {
    "label": "小王冠",
+   "label_en": "Crown",
    "price": 20,
    "anims": {
     "crawl": [
@@ -12589,6 +12662,7 @@
  "leaves": {
   "citrus": {
    "label": "柑橘叶",
+   "label_en": "Citrus leaf",
    "weight": 0,
    "effect": null,
    "minutes": 0,
@@ -12625,6 +12699,7 @@
   },
   "zanthoxylum": {
    "label": "花椒叶",
+   "label_en": "Sichuan pepper leaf",
    "weight": 30,
    "effect": "tingly",
    "minutes": 0,
@@ -12661,6 +12736,7 @@
   },
   "pomelo": {
    "label": "柚子叶",
+   "label_en": "Pomelo leaf",
    "weight": 30,
    "effect": "plenty",
    "minutes": 0,
@@ -12697,6 +12773,7 @@
   },
   "kumquat": {
    "label": "金橘叶",
+   "label_en": "Kumquat leaf",
    "weight": 25,
    "effect": null,
    "minutes": 0,
@@ -12733,6 +12810,7 @@
   },
   "trifoliate": {
    "label": "枳叶",
+   "label_en": "Trifoliate orange leaf",
    "weight": 20,
    "effect": null,
    "minutes": 0,
@@ -12769,6 +12847,7 @@
   },
   "sansho": {
    "label": "山椒叶",
+   "label_en": "Japanese pepper leaf",
    "weight": 20,
    "effect": "tingly",
    "minutes": 0,
@@ -12805,6 +12884,7 @@
   },
   "lemon": {
    "label": "柠檬叶",
+   "label_en": "Lemon leaf",
    "weight": 20,
    "effect": "sour",
    "minutes": 0,
@@ -12841,6 +12921,7 @@
   },
   "rue": {
    "label": "芸香叶",
+   "label_en": "Rue leaf",
    "weight": 8,
    "effect": "scent",
    "minutes": 30,
@@ -12877,6 +12958,7 @@
   },
   "phellodendron": {
    "label": "黄檗叶",
+   "label_en": "Cork tree leaf",
    "weight": 15,
    "effect": "long_nap",
    "minutes": 0,
@@ -12913,6 +12995,7 @@
   },
   "maple": {
    "label": "枫叶",
+   "label_en": "Maple leaf",
    "weight": 10,
    "effect": "picky",
    "minutes": 0,
@@ -12949,6 +13032,7 @@
   },
   "gold": {
    "label": "金叶子",
+   "label_en": "Golden leaf",
    "weight": 12,
    "effect": "sparkle",
    "minutes": 60,
@@ -12985,6 +13069,7 @@
   },
   "dream": {
    "label": "梦蝶叶",
+   "label_en": "Dream leaf",
    "weight": 2,
    "effect": "butterfly",
    "minutes": 10,

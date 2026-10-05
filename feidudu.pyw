@@ -24,6 +24,7 @@
 import base64
 import datetime
 import importlib
+import re
 import subprocess
 import sys
 import traceback
@@ -35,11 +36,27 @@ CRASH_LOG = HERE / "feidudu_crash.log"
 sys.path.insert(0, str(HERE))          # 从快捷方式、开机启动打开也找得到 feidudu_pet
 
 
+def english():
+    """my_config.py 里写了 LANGUAGE = "en"，弹出来的小框也说英文（这时候程序还没读进来，自己看一眼）。"""
+    try:
+        text = (HERE / "my_config.py").read_text(encoding="utf-8")
+    except OSError:
+        return False
+    return re.search(r"""^\s*LANGUAGE\s*=\s*["']en["']""", text, re.M) is not None
+
+
+EN = english()
+
+
+def tr(zh, en):
+    return en if EN else zh
+
+
 def message(text):
     """双击 .pyw 没有黑窗口，有事就弹个小框说。"""
     if sys.platform == "win32":
         import ctypes
-        ctypes.windll.user32.MessageBoxW(None, text, "肥嘟嘟", 0x40)
+        ctypes.windll.user32.MessageBoxW(None, text, tr("肥嘟嘟", "FeiDuDu"), 0x40)
     elif sys.stderr:
         print(text, file=sys.stderr)
 
@@ -71,14 +88,17 @@ def ensure_pyqt6():
     """第一次打开：没有 PyQt6 就自己装一下。"""
     if has_pyqt6():
         return True
-    message("第一次打开，要先装一下 PyQt6（只用装一次）。\n点「确定」开始装，大概一两分钟，装好肥嘟嘟会自己出来。")
+    message(tr("第一次打开，要先装一下 PyQt6（只用装一次）。\n点「确定」开始装，大概一两分钟，装好肥嘟嘟会自己出来。",
+               "First time here: PyQt6 needs to be installed (only once).\nClick OK to start. It takes a minute or two, "
+               "and FeiDuDu will come out by itself when it's done."))
     no_window = 0x08000000 if sys.platform == "win32" else 0     # 装的时候也不弹黑窗口
     result = subprocess.run([sys.executable, "-m", "pip", "install", "--upgrade", "PyQt6"],
                             capture_output=True, text=True, creationflags=no_window)
     if has_pyqt6():
         return True
     log_error(RuntimeError, RuntimeError("PyQt6 没装上：\n" + result.stdout[-2000:] + result.stderr[-2000:]), None)
-    message("PyQt6 没装上 T_T\n可能是网络不通。详细的记在 feidudu_error.log 里。")
+    message(tr("PyQt6 没装上 T_T\n可能是网络不通。详细的记在 feidudu_error.log 里。",
+               "Couldn't install PyQt6 T_T\nMaybe there's no internet connection. Details are in feidudu_error.log."))
     return False
 
 
@@ -116,9 +136,11 @@ def files_ok():
     if not missing:
         return True
     log_error(FileNotFoundError, FileNotFoundError(f"在 {HERE} 里找不到：{', '.join(missing)}"), None)
-    message("肥嘟嘟的文件好像不全，缺了：\n" + "\n".join(missing)
-            + "\n\n请重新下载完整的项目（GitHub 上 Code → Download ZIP，整个解压），"
-              "把 feidudu_save.json 复制过去就能接着玩。")
+    message(tr("肥嘟嘟的文件好像不全，缺了：\n", "Some of FeiDuDu's files are missing:\n") + "\n".join(missing)
+            + tr("\n\n请重新下载完整的项目（GitHub 上 Code → Download ZIP，整个解压），"
+                 "把 feidudu_save.json 复制过去就能接着玩。",
+                 "\n\nPlease download the whole project again (on GitHub: Code → Download ZIP, unzip all of it), "
+                 "then copy feidudu_save.json over to keep your progress."))
     return False
 
 
@@ -158,4 +180,5 @@ if __name__ == "__main__":
             kind, value, tb = sys.exc_info()
             log_error(kind, value, tb)
             log_error(RuntimeError, RuntimeError(where_it_looked()), None)
-            message("肥嘟嘟没能出来，出错的详细记在 feidudu_error.log 里。")
+            message(tr("肥嘟嘟没能出来，出错的详细记在 feidudu_error.log 里。",
+                       "FeiDuDu couldn't start. Details are in feidudu_error.log."))

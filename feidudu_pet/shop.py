@@ -7,34 +7,36 @@ import random
 
 from . import effects
 from .behaviors.munch import refuse_reason
+from .lang import tr
 from .menu import add_submenu
 from .save import write_save
 
 
 def add_to_menu(menu, pet):
     sp, frass = pet.sp, pet.save.get("frass", 0)
-    shop = add_submenu(menu, f"小卖部（花肥 {frass} 颗）")
+    shop = add_submenu(menu, tr(f"小卖部（花肥 {frass} 颗）", f"Shop ({frass} frass)"))
     price = sp.shop["gacha_price"]
-    action = shop.addAction(f"抽一片神秘叶子（{price} 颗）", lambda *_: buy_leaf(pet))
+    action = shop.addAction(tr(f"抽一片神秘叶子（{price} 颗）", f"Mystery leaf ({price} frass)"), lambda *_: buy_leaf(pet))
     action.setEnabled(frass >= price)
     shop.addSeparator()
     owned = pet.save.get("owned", [])
     for name, acc in sp.accessories.items():
         have = name in owned
-        action = shop.addAction(f"{acc['label']}（{'买过了' if have else str(acc['price']) + ' 颗'}）",
+        cost = tr("买过了", "owned") if have else tr(f"{acc['price']} 颗", f"{acc['price']} frass")
+        action = shop.addAction(tr(f"{acc['label']}（{cost}）", f"{acc['label']} ({cost})"),
                                 lambda *_, n=name: buy_accessory(pet, n))
         action.setEnabled(not have and frass >= acc["price"])
 
     mine = [n for n in owned if n in sp.accessories]           # 货架上撤掉的饰品就不显示了
     if mine:
-        closet = add_submenu(menu, "衣柜")
+        closet = add_submenu(menu, tr("衣柜", "Wardrobe"))
         wearing = pet.save.get("wearing")
         for name in mine:
             action = closet.addAction(sp.accessories[name]["label"], lambda *_, n=name: wear(pet, n))
             action.setCheckable(True)
             action.setChecked(name == wearing)
         closet.addSeparator()
-        closet.addAction("什么都不戴", lambda *_: wear(pet, None))
+        closet.addAction(tr("什么都不戴", "Nothing"), lambda *_: wear(pet, None))
 
 
 def pay(pet, price):

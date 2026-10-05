@@ -10,6 +10,7 @@ from PyQt6.QtGui import QColor, QCursor, QPainter
 from PyQt6.QtWidgets import QWidget
 
 from .menu import crayon_menu
+from .lang import tr
 from .win32 import no_activate
 
 
@@ -19,7 +20,7 @@ class ImeBar(QWidget):
                          | Qt.WindowType.Tool | Qt.WindowType.WindowDoesNotAcceptFocus)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating)
-        self.setWindowTitle("输入法")
+        self.setWindowTitle(tr("输入法", "Input method"))
         self.setMouseTracking(True)
         self.skin = skin
         self.setFixedSize(*[int(v) for v in skin["size"]])
@@ -86,7 +87,7 @@ class ImeBar(QWidget):
 
     def contextMenuEvent(self, event):
         menu = crayon_menu()
-        menu.addAction("还原", self.on_restore)
+        menu.addAction(tr("还原", "Restore"), self.on_restore)
         menu.exec(QCursor.pos())
 
     def showEvent(self, event):

@@ -10,8 +10,9 @@ from PIL import Image
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE.parent / "sprites"
-FONT = HERE / "LongCang.ttf"
-FONT_URL = "https://raw.githubusercontent.com/google/fonts/main/ofl/longcang/LongCang-Regular.ttf"
+# 泡泡里的字：中文用龙藏体，英文用 Patrick Hand（都是 SIL Open Font License，第一次画的时候自动下载，不进仓库）
+FONTS = {HERE / "LongCang.ttf": "https://raw.githubusercontent.com/google/fonts/main/ofl/longcang/LongCang-Regular.ttf",
+         HERE / "PatrickHand.ttf": "https://raw.githubusercontent.com/google/fonts/main/ofl/patrickhand/PatrickHand-Regular.ttf"}
 
 
 def save_png(url, path):
@@ -30,8 +31,9 @@ def save_cropped(url, path):
 
 
 async def main():
-    if not FONT.exists():
-        urllib.request.urlretrieve(FONT_URL, FONT)
+    for font, url in FONTS.items():
+        if not font.exists():
+            urllib.request.urlretrieve(url, font)
     OUT.mkdir(exist_ok=True)
     for old in OUT.glob("*.png"):
         old.unlink()
@@ -47,7 +49,7 @@ async def main():
         t = time.time()
         r = await page.evaluate("renderPet()")
         print("render s", round(time.time() - t, 1), errors)
-        manifest = {"scale": r["scale"], "anims": {}, "bubbles": {}}
+        manifest = {"scale": r["scale"], "anims": {}, "bubbles": {}, "bubbles_en": {}}
         for name, a in r["anims"].items():
             files, box = [], None
             for i, url in enumerate(a["frames"]):
@@ -66,7 +68,7 @@ async def main():
                 for i, url in enumerate(frames):
                     fn = f"acc_{name}_{anim}_{i:02d}.png"
                     anims[anim].append({"file": fn, "at": save_cropped(url, OUT / fn)})
-            manifest["accessories"][name] = {"label": acc["label"], "price": acc["price"], "anims": anims}
+            manifest["accessories"][name] = {"label": acc["label"], "label_en": acc["label_en"], "price": acc["price"], "anims": anims}
         manifest["leaves"] = {}
         for name, leaf in r["leaves"].items():
             files = []
@@ -86,6 +88,10 @@ async def main():
             fn = f"bubble_{name}.png"
             save_png(url, OUT / fn)
             manifest["bubbles"][name] = fn
+        for name, url in r["bubbles_en"].items():                 # 英文版泡泡（LANGUAGE = "en"）
+            fn = f"bubble_en_{name}.png"
+            save_png(url, OUT / fn)
+            manifest["bubbles_en"][name] = fn
         save_png(r["frass"], OUT / "frass.png")
         manifest["frass"] = "frass.png"
         skin = r["skin"]                                   # 伪装用的输入法皮肤

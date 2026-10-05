@@ -11,8 +11,8 @@
    sprites/、docs/、feidudu_icon.ico，以及 art-source/ 里其余的文件（肥嘟嘟、饰品、叶子、输入法皮肤、菜单的画法）
    sprites/, docs/, feidudu_icon.ico, and the rest of art-source/ (how FeiDuDu, accessories, leaves, the IME skin and menus are drawn)
 
-泡泡里的字体龙藏体 Long Cang 不在仓库里（画帧时自动下载），它用的是 SIL Open Font License。
-The Long Cang font used in speech bubbles is not included (it is downloaded when rendering) and is under the SIL Open Font License.
+泡泡里的字体龙藏体 Long Cang、Patrick Hand 不在仓库里（画帧时自动下载），它们用的是 SIL Open Font License。
+The Long Cang and Patrick Hand fonts used in speech bubbles are not included (they are downloaded when rendering) and are under the SIL Open Font License.
 
 --------------------------------------------------------------------------------
 

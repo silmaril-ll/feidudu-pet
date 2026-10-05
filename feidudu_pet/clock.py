@@ -2,6 +2,7 @@
 import datetime
 
 from .config import TIMEZONE
+from .lang import tr
 
 _warned = False
 
@@ -20,7 +21,7 @@ def now():
     except Exception:                                   # 时区名字写错了、或者 Windows 上没装 tzdata
         if not _warned:
             _warned = True
-            print(f"时区 {TIMEZONE!r} 用不了，先按系统时间", flush=True)
+            print(tr(f"时区 {TIMEZONE!r} 用不了，先按系统时间", f"Can't use time zone {TIMEZONE!r}, using the system clock"), flush=True)
         return datetime.datetime.now()
 
 

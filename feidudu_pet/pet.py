@@ -29,6 +29,7 @@ from .config import (BUBBLE_MIN, BUBBLE_ROOM, DEFAULT_SIZE, FRASS_ON_SCREEN, GAM
                      POKE_WIGGLE, REACH,
                      SCENTS, SIZE_OPTIONS, SNAKE_POKES, SNAKE_WINDOW, SPARKLES, TICK_MS, WINDOW_CHECK_TICKS)
 from .disguise import ImeBar, default_spot
+from .lang import tr
 from .menu import add_submenu, crayon_menu
 from .pellets import Pellet
 from .save import load_save, write_save
@@ -44,7 +45,7 @@ class FeiDuDu(QWidget):
                          | Qt.WindowType.Tool | Qt.WindowType.WindowDoesNotAcceptFocus)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating)
-        self.setWindowTitle("肥嘟嘟")
+        self.setWindowTitle(tr("肥嘟嘟", "FeiDuDu"))
 
         self.sp = sprites
         self.save = load_save()
@@ -281,7 +282,7 @@ class FeiDuDu(QWidget):
             w.hide()
         if self.tray:
             self.tray.show()                                         # 托盘图标留着，点它叫它出来
-            self.tray.setToolTip("肥嘟嘟在睡觉（单击叫它出来）")
+            self.tray.setToolTip(tr("肥嘟嘟在睡觉（单击叫它出来）", "FeiDuDu is asleep (click to wake it)"))
 
     def unpause(self, *_):
         """叫它出来：接着刚才的事做。"""
@@ -291,7 +292,7 @@ class FeiDuDu(QWidget):
         for pellet in self.pellets:
             pellet.show()
         if self.tray:
-            self.tray.setToolTip("肥嘟嘟")
+            self.tray.setToolTip(tr("肥嘟嘟", "FeiDuDu"))
         self.show()
         self.say("back", 2.5)
         self.senses.resume()
@@ -378,16 +379,16 @@ class FeiDuDu(QWidget):
         menu.addSeparator()
         shop.add_to_menu(menu, self)
         menu.addSeparator()
-        size_menu = add_submenu(menu, "大小")
-        for label, value in SIZE_OPTIONS:
-            action = size_menu.addAction(label, lambda *_, v=value: self.set_size(v))
+        size_menu = add_submenu(menu, tr("大小", "Size"))
+        for zh, en, value in SIZE_OPTIONS:
+            action = size_menu.addAction(tr(zh, en), lambda *_, v=value: self.set_size(v))
             action.setCheckable(True)
             action.setChecked(abs(self.save.get("size", DEFAULT_SIZE) - value) < 0.01)
-        menu.addAction("安静一会儿（暂停，点托盘图标叫它出来）", self.pause)
-        rest = menu.addAction("提醒我歇一歇", self.toggle_break_reminder)
+        menu.addAction(tr("安静一会儿（暂停，点托盘图标叫它出来）", "Quiet time (click the tray icon to bring it back)"), self.pause)
+        rest = menu.addAction(tr("提醒我歇一歇", "Remind me to take breaks"), self.toggle_break_reminder)
         rest.setCheckable(True)
         rest.setChecked(self.save.get("break_reminder", True))
-        menu.addAction("让它去睡（退出）", QApplication.instance().quit)
+        menu.addAction(tr("让它去睡（退出）", "Put it to bed (quit)"), QApplication.instance().quit)
         return menu
 
     # ---------- 鼠标

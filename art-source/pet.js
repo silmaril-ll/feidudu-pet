@@ -121,14 +121,16 @@ function leafBitten(ctx, stage, parts){
   x.restore(); ctx.drawImage(c, 0, 0);
 }
 
-// a speech bubble; long text gets a wider canvas (the tail always sits in the middle of the canvas)
-function bubble(text, w){
+// a speech bubble; long text gets a wider canvas (the tail always sits in the middle of the canvas).
+// English bubbles use the Patrick Hand font and are as wide as their text.
+function bubble(text, w, en){
+  if (en) { const m = ART.mk(10, 10).getContext('2d'); m.font = '32px "Patrick Hand"'; w = Math.max(104, Math.ceil(m.measureText(text).width) + 44); }
   const W = w || 120, CW = Math.max(200, W + 24), c = CW / 2;
   const cv = ART.mk(CW, 120), ctx = cv.getContext('2d');
   const x0 = c - W / 2, x1 = c + W / 2;
   const d = 'M' + (x0 + 16) + ',14 L' + (x1 - 16) + ',14 C' + x1 + ',14 ' + x1 + ',20 ' + x1 + ',34 L' + x1 + ',50 C' + x1 + ',64 ' + x1 + ',70 ' + (x1 - 16) + ',70 L' + (c + 14) + ',70 L' + (c + 2) + ',96 L' + (c - 8) + ',70 L' + (x0 + 16) + ',70 C' + x0 + ',70 ' + x0 + ',64 ' + x0 + ',50 L' + x0 + ',34 C' + x0 + ',20 ' + x0 + ',14 ' + (x0 + 16) + ',14 Z';
   ART.figure(ctx, [{ d: d, fill: '#fffdf6', hatchK: .25, step: 1, lw: 2 }], { x: 0, y: 0, s: 1, r: 0 }, Object.assign({}, PO, { seed: 70 + text.length, border: 6, lineS: 1.4 }));
-  ctx.font = '34px "Long Cang"'; ctx.fillStyle = '#3b2f29'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.font = en ? '32px "Patrick Hand"' : '34px "Long Cang"'; ctx.fillStyle = '#3b2f29'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.fillText(text, c, 44);
   return cv.toDataURL('image/png');
 }
@@ -207,10 +209,22 @@ function sparkle(col, s){
   return c.toDataURL('image/png');
 }
 
+// 泡泡的英文版（config 里 LANGUAGE = "en" 时用）；叶子的泡泡用 items.js 里的 en 名字
+const BUBBLES_EN = {
+  hum: 'Hmph!', niu: 'Wiggle~', zz: 'Zz…', burp: 'Burp~', yum: 'Yum!', dots: '...', hi: 'Morning!', nope: 'Nope!', aah: 'Waah~',
+  zip: 'Zip~', heave: 'Hup!', hmm: 'Hm?', pu: 'Pff', back: "I'm back", pretty: 'Pretty?', tingly: 'Tingly~', shiny: 'Sparkly!',
+  sleepy: 'Sleepy…', dream: 'I had a dream…', full: 'So full~', stuffed: "I'm stuffed", hiss: 'Hsss—!', hello: 'Hello!',
+  sour: 'Sour!', asleep: 'Shh~ sleeping', fragrant: 'Smells nice~', picky: 'No way!', rutaceae: 'Citrus family only!',
+  take_away: 'Take it away!', better: 'Much better', morning: 'Morning!', noon: 'Lunchtime!', afternoon: 'Afternoon!',
+  evening: 'Evening!', late: "It's late…", welcome: "You're back!", reach: "Can't reach~", startle: 'Eek!', done: 'All done?',
+  rest: 'Take a break?', busy: 'Whatcha doing?', comfy: 'Comfy~', phew: 'Phew~'
+};
+
 async function renderPet(){
   const f = new FontFace('Long Cang', 'url(LongCang.ttf)'); await f.load(); document.fonts.add(f);
+  const f2 = new FontFace('Patrick Hand', 'url(PatrickHand.ttf)'); await f2.load(); document.fonts.add(f2);
   ART.initTooth(PW, 460, 5);
-  const out = { scale: 2, anims: buildAnims(fatParts(), fatParts({ horns: true })), bubbles: {}, accessories: {}, leaves: {}, shop: { gacha_price: GACHA_PRICE } };
+  const out = { scale: 2, anims: buildAnims(fatParts(), fatParts({ horns: true })), bubbles: {}, bubbles_en: {}, accessories: {}, leaves: {}, shop: { gacha_price: GACHA_PRICE } };
   const bubbles = [['hum', '哼！', 104], ['niu', '扭扭～', 134], ['zz', 'Zz…', 110], ['burp', '嗝～', 104], ['yum', '好吃！', 128], ['dots', '……', 104], ['hi', '早呀', 110],
    ['nope', '不放！', 118], ['aah', '哇啊～', 118], ['zip', '咻～', 104], ['heave', '嘿咻', 110],
    ['hmm', '嗯？', 104], ['pu', '噗', 104], ['back', '回来啦', 134],
@@ -223,14 +237,15 @@ async function renderPet(){
   Object.keys(ACCESSORIES).forEach(name => {
     const a = ACCESSORIES[name], parts = a.parts();
     const anims = buildAnims(parts, parts, true);
-    out.accessories[name] = { label: a.label, price: a.price, anims: Object.keys(anims).reduce((o, k) => (o[k] = anims[k].frames, o), {}) };
+    out.accessories[name] = { label: a.label, label_en: a.en || a.label, price: a.price, anims: Object.keys(anims).reduce((o, k) => (o[k] = anims[k].frames, o), {}) };
   });
   // 叶子：4 个咬了几口的样子；抽到时冒一个写着名字的泡泡
   Object.keys(LEAVES).forEach(name => {
     const l = LEAVES[name], parts = l.parts();
     const frames = [0, 1, 2, 3].map(stage => { const c = ART.mk(PW, PH); leafBitten(c.getContext('2d'), stage, parts); return c.toDataURL('image/png'); });
-    out.leaves[name] = { label: l.label, weight: l.weight || 0, effect: l.effect || null, minutes: l.minutes || 0, frames: frames };
+    out.leaves[name] = { label: l.label, label_en: l.en || l.label, weight: l.weight || 0, effect: l.effect || null, minutes: l.minutes || 0, frames: frames };
     bubbles.push(['leaf_' + name, l.label + '！', Math.min(190, 60 + 34 * l.label.length)]);
+    out.bubbles_en['leaf_' + name] = bubble((l.en || l.label) + '!', 0, true);
   });
   out.sparkles = [sparkle('#f6d86b', 1.7), sparkle('#fff6c8', 1.3), sparkle('#fbe7a0', 1)];
   out.scents = [.9, 1.1, 1.3].map((k, i) => {               // 芸香叶：身边飘起来的一缕缕香味
@@ -240,6 +255,9 @@ async function renderPet(){
     return c.toDataURL('image/png');
   });
   bubbles.forEach(b => { out.bubbles[b[0]] = bubble(b[1], b[2]); });
+  Object.keys(BUBBLES_EN).forEach(k => { out.bubbles_en[k] = bubble(BUBBLES_EN[k], 0, true); });
+  const missing = bubbles.map(b => b[0]).filter(k => !out.bubbles_en[k]);
+  if (missing.length) throw new Error('BUBBLES_EN 少了：' + missing.join(', '));
   const fc = ART.mk(64, 64);
   ART.figure(fc.getContext('2d'), frassParts(), { x: 32, y: 31, s: PS, r: -.3 }, Object.assign({}, PO, { seed: 95, border: 5 }));
   out.frass = fc.toDataURL('image/png');

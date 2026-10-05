@@ -10,6 +10,7 @@ from PyQt6.QtCore import QTimer
 
 from . import register
 from .base import Behavior
+from ..lang import tr
 from .. import effects
 from ..config import FRASS_PER_LEAF, FULL_AFTER, FULL_BOUT, FULL_MINUTES, GROW_PER_LEAF, MAX_GROWTH
 from ..save import write_save
@@ -81,5 +82,7 @@ class Munch(Behavior):
 
     def menu_items(self, pet):
         if is_full(pet):
-            return [(f"喂一片叶子（吃饱了，还要 {full_minutes_left(pet)} 分钟）", pet.feed)]
-        return [(f"喂一片叶子（已经吃了 {pet.save.get('leaves', 0)} 片）", pet.feed)]
+            return [(tr(f"喂一片叶子（吃饱了，还要 {full_minutes_left(pet)} 分钟）",
+                        f"Feed a leaf (full — {full_minutes_left(pet)} more min)"), pet.feed)]
+        return [(tr(f"喂一片叶子（已经吃了 {pet.save.get('leaves', 0)} 片）",
+                    f"Feed a leaf ({pet.save.get('leaves', 0)} eaten so far)"), pet.feed)]
