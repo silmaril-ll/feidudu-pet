@@ -68,6 +68,9 @@ NIBBLE_WEIGHT = 0.003     # 自己找点叶子边啃一口（过一会儿拉一�
 # 界面语言："zh" 中文，"en" 英文（菜单、泡泡、叶子和饰品的名字都跟着换）
 LANGUAGE = "zh"
 
+# 每吃满这么多片叶子，放一次礼花庆祝
+PARTY_EVERY = 100
+
 # 伪装的快捷键（只在 Windows 上有用）：再按一次就出来
 HOTKEY = "Ctrl+Alt+Z"
 

@@ -13,11 +13,12 @@ PyQt6 写的 Windows 桌宠。`feidudu.pyw` 是启动器（双击就开：先看
 | `feidudu_pet/config.py` | 所有可调的数字（速度、大小、拉扯力度……）。用户自己调的写在根目录 `my_config.py`（不进 git），`feidudu_pet/__init__.py` 在别的模块读 config 之前把它盖上去 |
 | `feidudu_pet/pet.py` | 肥嘟嘟本体窗口：位置、每一拍、画、鼠标、右键菜单 |
 | `feidudu_pet/world.py` | 各个“面”：怎么沿着爬、到头怎么转弯、从哪吐丝、落在哪 |
-| `feidudu_pet/behaviors/` | **一个动作一个文件**（idle、crawl、wave、wiggle、angry、snake、sleep、munch、nibble、refuse、frass、hang、lifted、tug、pupa、butterfly、approach、cling、comfy、look、peek） |
+| `feidudu_pet/behaviors/` | **一个动作一个文件**（idle、crawl、wave、wiggle、angry、snake、sleep、munch、nibble、refuse、frass、hang、lifted、tug、pupa、butterfly、approach、cling、comfy、look、peek、party） |
 | `feidudu_pet/senses.py` | 肥嘟嘟的感觉：每拍看鼠标在哪、多快（`pet.senses.cursor` / `speed`），鼠标键按没按着（`pressed`、`pressed_at`），人多久没碰电脑（`idle`、`away`），在不在忙（`busy`、`busy_since`、`done_busy`） |
 | `feidudu_pet/lang.py` | 界面语言（`config.LANGUAGE`，"zh" 默认 / "en"）：菜单上的字写成 `tr("中文", "English")`；泡泡、叶子饰品名字是画好的，`sprites.py` 按语言挑 |
 | `feidudu_pet/clock.py` | 肥嘟嘟看的钟（`config.TIMEZONE`）：按时间打招呼、晚上犯困 |
 | `feidudu_pet/win32.py` | 只有这里碰 Windows API（找活动窗口、不抢焦点、伪装快捷键 `GlobalHotkey`、人多久没碰电脑 `idle_seconds`、鼠标键按没按着 `buttons_down`、最前面是哪个程序 `foreground_app`） |
+| `feidudu_pet/confetti.py` | 礼花：每吃满一百片叶子，透明点不到的大窗口里立起礼花筒、喷彩纸（只在放的几秒里开着，30 帧/秒） |
 | `feidudu_pet/silk.py` | 画那根丝的透明小窗口 |
 | `feidudu_pet/silk_trail.py` | 丝垫：爬过的地方留下的丝（任务栏一条、活动窗口上沿一条，都点不到） |
 | `feidudu_pet/disguise.py` | 伪装：卡通皮肤的输入法（没有框，蜡笔肥嘟嘟背上浮着小圆按钮；`sprites/skin.png`，画法在 `art-source/skin.js`） |
@@ -77,6 +78,10 @@ PyQt6 写的 Windows 桌宠。`feidudu.pyw` 是启动器（双击就开：先看
 - **吃饱了**（`behaviors/munch.py`）：`record_meal` 记最近几顿，`FULL_BOUT` 分钟里吃了 `FULL_AFTER` 片就设 `save["full_until"]`。
   能不能喂统一看 `refuse_reason(pet)`（睡着 / 吃饱 / 不在地上），右键喂叶子和小卖部抽叶子都用它，吃不了就不扣花肥。
   `nibble`：很少被随机挑中，啃一小口 `gut` 加 1，不算一顿。
+- **吃满一百片庆祝**（`behaviors/party.py`、`confetti.py`）：`munch` 吃完一片后 `save["leaves"]` 是 `PARTY_EVERY` 的倍数，就进 `party`
+  （借 `wave` 的画面抬身子晃，泡泡“第100片！”…“第3000片！”，再往后“又一百片！”），同时 `pet.confetti.burst` 在头前面立礼花筒、
+  `POP_AT` 秒后喷 `PIECES` 片彩纸（`pet.js` 的 `popperPic`、`confettiPics`）。放完再走 `munch.after_meal`（特别叶子的效果、好吃、嗝）。
+  `party` 算 `busy`：这时候戳它、喂它都不打断。伪装、暂停时礼花收起来。
 - **蛇形警戒**（`behaviors/snake.py`）：`pet.poke` 记最近几次戳的时间，`SNAKE_WINDOW` 秒里戳了 `SNAKE_POKES` 下就进 `snake`。
 - **人走开 / 回来**（`senses.py`、`sleep.nod_off` / `sleep.welcome`、`behaviors/approach.py`）：`win32.idle_seconds()`
   （`GetLastInputInfo`，别的系统上看鼠标有没有动）超过 `AWAY_AFTER` 秒算走开，它在地上闲着就睡（`pet.away_nap`，不自己醒）；

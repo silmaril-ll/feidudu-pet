@@ -39,7 +39,7 @@ sys.path.insert(0, str(HERE))          # 从快捷方式、开机启动打开也
 def english():
     """my_config.py 里写了 LANGUAGE = "en"，弹出来的小框也说英文（这时候程序还没读进来，自己看一眼）。"""
     try:
-        text = (HERE / "my_config.py").read_text(encoding="utf-8")
+        text = (HERE / "my_config.py").read_text(encoding="utf-8-sig")
     except OSError:
         return False
     return re.search(r"""^\s*LANGUAGE\s*=\s*["']en["']""", text, re.M) is not None

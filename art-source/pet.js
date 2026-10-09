@@ -202,6 +202,42 @@ function peekFrame(rise, dx, hands){
   return cv.toDataURL('image/png');
 }
 
+// 礼花筒（每吃满一百片叶子的庆祝）：一个斜条纹的纸筒，口朝上，口上一圈金边，底下拖一根拉线。
+// 筒尖在 (0,0)，筒口中间在 (0,-34)；程序把筒尖放在地上、按方向斜着立起来，彩纸从筒口喷出去
+function popperParts(){
+  const P = [];
+  P.push({ line: 'M0,0 C3,5 -3,9 1,14 C4,17 2,20 0,22', lw: 1.3, color: '#c9a25a', double: false });      // 拉线
+  P.push({ d: 'M-14,-33 L14,-33 L2.2,-.5 C1,.6 -1,.6 -2.2,-.5 Z', fill: '#f4b8c8', hatch: -1.1 });
+  P.push({ line: 'M-11.5,-26 L8,-33 M-9.5,-18 L11.8,-26 M-7,-10 L9,-17 M-4.5,-3.5 L5.6,-8', lw: 3.2, color: '#f7d774', double: false });
+  P.push({ d: ART.E(0, -33, 14.5, 3.6), fill: '#f3d36b', lw: 1.2 });
+  P.push({ d: ART.E(0, -33.4, 10.5, 2), fill: '#7a5a3a', outline: false });
+  return P;
+}
+function popperPic(){
+  const c = ART.mk(120, 180);
+  ART.figure(c.getContext('2d'), popperParts(), { x: 60, y: 120, s: 2.4, r: 0 }, Object.assign({}, PO, { seed: 230, border: 6, lineS: 2 }));
+  return c.toDataURL('image/png');
+}
+// 彩纸：小方片、小圆片、小三角，还有卷卷的彩带，蜡笔画的，程序里一片片飞出来
+const CONFETTI_COLORS = ['#f2a7b5', '#f7d774', '#9fd3e6', '#b8e0a0', '#c9b3ea', '#f5b87a'];
+function confettiPics(){
+  const shapes = [ 'M-4,-2.6 L4,-2.6 L4,2.6 L-4,2.6 Z', ART.E(0, 0, 3.2), 'M0,-3.6 L3.6,3 L-3.6,3 Z' ];
+  const out = [];
+  CONFETTI_COLORS.forEach((col, i) => shapes.forEach((d, k) => {
+    const c = ART.mk(40, 40);
+    ART.figure(c.getContext('2d'), [{ d: d, fill: col, lw: .8, hatchK: .4 }], { x: 20, y: 20, s: 2.4, r: (i + k) * .7 },
+      Object.assign({}, PO, { seed: 240 + i * 3 + k, border: 2, lineS: 1 }));
+    out.push(c.toDataURL('image/png'));
+  }));
+  CONFETTI_COLORS.forEach((col, i) => {                         // 卷卷的彩带
+    const c = ART.mk(70, 70);
+    ART.figure(c.getContext('2d'), [{ line: 'M-12,-8 C-6,-14 -2,-2 3,-6 C8,-10 10,2 14,-2 C16,-4 14,6 10,9', lw: 2.2, color: col, double: false }],
+      { x: 35, y: 35, s: 2, r: i * 1.1 }, Object.assign({}, PO, { seed: 260 + i, cut: false, lineS: 1.4 }));
+    out.push(c.toDataURL('image/png'));
+  });
+  return out;
+}
+
 function sparkle(col, s){
   const c = ART.mk(48, 48);
   ART.figure(c.getContext('2d'), [{ d: 'M0,-8 C1,-2.2 2.2,-1 8,0 C2.2,1 1,2.2 0,8 C-1,2.2 -2.2,1 -8,0 C-2.2,-1 -1,-2.2 0,-8 Z', fill: col, lw: 1, hatchK: .4 }],
@@ -254,6 +290,12 @@ async function renderPet(){
       { x: 20, y: 28, s: k, r: 0 }, Object.assign({}, PO, { seed: 220 + i, cut: false, lineS: 1.2 }));
     return c.toDataURL('image/png');
   });
+  // 吃满一百片的庆祝泡泡：第100片！…第3000片！，再往后都是“又一百片！”
+  for (let n = 100; n <= 3000; n += 100) { bubbles.push(['leaves_' + n, '第' + n + '片！', 44 + 24 * ('第' + n + '片！').length]); BUBBLES_EN['leaves_' + n] = 'Leaf #' + n + '!'; }
+  bubbles.push(['leaves_more', '又一百片！', 190]); BUBBLES_EN.leaves_more = 'Another hundred!';
+  bubbles.push(['hooray', '撒花～', 134]); BUBBLES_EN.hooray = 'Hooray!';
+  out.popper = popperPic();
+  out.confetti = confettiPics();
   bubbles.forEach(b => { out.bubbles[b[0]] = bubble(b[1], b[2]); });
   Object.keys(BUBBLES_EN).forEach(k => { out.bubbles_en[k] = bubble(BUBBLES_EN[k], 0, true); });
   const missing = bubbles.map(b => b[0]).filter(k => !out.bubbles_en[k]);

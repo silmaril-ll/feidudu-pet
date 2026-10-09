@@ -28,6 +28,7 @@ from .behaviors.sleep import nod_off, welcome
 from .config import (BUBBLE_MIN, BUBBLE_ROOM, DEFAULT_SIZE, FRASS_ON_SCREEN, GAME_CHECK_MS, GAME_TITLES, GAMES,
                      POKE_WIGGLE, REACH,
                      SCENTS, SIZE_OPTIONS, SNAKE_POKES, SNAKE_WINDOW, SPARKLES, TICK_MS, WINDOW_CHECK_TICKS)
+from .confetti import Confetti
 from .disguise import ImeBar, default_spot
 from .lang import tr
 from .menu import add_submenu, crayon_menu
@@ -51,6 +52,7 @@ class FeiDuDu(QWidget):
         self.save = load_save()
         self.silk = SilkThread()
         self.silk_trail = SilkTrail()
+        self.confetti = Confetti(sprites)   # 每吃满一百片叶子放的礼花
         self.pellets = []               # 地上还没捡的便便
         self.ime = ImeBar(sprites.skin, self.undisguise, self.remember_ime_spot)    # 伪装用的输入法皮肤
         self.tray = None                # 托盘图标（app.py 放进来），伪装时藏起来
@@ -119,6 +121,8 @@ class FeiDuDu(QWidget):
         self.approach_then = None
         self.approach_hurry = True
         self.peek_seq = []
+        self.party_seq = []
+        self.party_after = (None, False)
         self.rest_next = 0.0            # 提醒你歇一下：下次最早什么时候
 
         # 活动窗口
@@ -243,6 +247,7 @@ class FeiDuDu(QWidget):
             return
         self.timer.stop()
         self.bubble = None
+        self.confetti.stop()
         for w in (self, self.silk, self.silk_trail.floor_mat, self.silk_trail.window_mat, *self.pellets):
             w.hide()
         if self.tray:
@@ -278,6 +283,7 @@ class FeiDuDu(QWidget):
         self.paused = why
         self.timer.stop()
         self.bubble = None
+        self.confetti.stop()
         for w in (self, self.silk, self.silk_trail.floor_mat, self.silk_trail.window_mat, self.ime, *self.pellets):
             w.hide()
         if self.tray:
@@ -322,7 +328,7 @@ class FeiDuDu(QWidget):
     # ---------- 右键菜单里的操作
 
     def busy(self):
-        return self.state in ("hang", "lifted", "tug", "pupa", "butterfly", "cling")
+        return self.state in ("hang", "lifted", "tug", "pupa", "butterfly", "cling", "party")
 
     def feed(self, *_):
         """喂一片柑橘叶。睡着了、吃饱了、在墙上吊着的时候不吃（叶子不给出去）。"""

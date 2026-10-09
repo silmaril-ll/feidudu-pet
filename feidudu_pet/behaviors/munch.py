@@ -12,7 +12,7 @@ from . import register
 from .base import Behavior
 from ..lang import tr
 from .. import effects
-from ..config import FRASS_PER_LEAF, FULL_AFTER, FULL_BOUT, FULL_MINUTES, GROW_PER_LEAF, MAX_GROWTH
+from ..config import FRASS_PER_LEAF, FULL_AFTER, PARTY_EVERY, FULL_BOUT, FULL_MINUTES, GROW_PER_LEAF, MAX_GROWTH
 from ..save import write_save
 
 BITES, CHEWS = 4, 6          # 咬 4 口（叶子画面 4 个样子），每口嚼 6 下（munch 画面 6 帧）
@@ -49,6 +49,14 @@ def record_meal(pet):
     return full
 
 
+def after_meal(pet, leaf, full):
+    """吃完一片以后：歇一会儿；特别的叶子有特别效果，普通的叶子就“好吃！”再打个嗝（吃饱了就是“好撑～”）。"""
+    pet.start("idle", random.uniform(4, 8))
+    if not effects.apply(pet, leaf):
+        pet.say("full" if full else "yum", 1.8)
+        QTimer.singleShot(2200, lambda: pet.say("burp", 1.6) if pet.state == "idle" else None)
+
+
 @register
 class Munch(Behavior):
     name = "munch"
@@ -72,10 +80,9 @@ class Munch(Behavior):
             write_save(pet.save)
             pet.apply_size()
             leaf = pet.sp.leaves[pet.leaf_kind]
-            pet.start("idle", random.uniform(4, 8))
-            if not effects.apply(pet, leaf):                # 普通的叶子：好吃！嗝～（吃饱了就是“好撑～”）
-                pet.say("full" if full else "yum", 1.8)
-                QTimer.singleShot(2200, lambda: pet.say("burp", 1.6) if pet.state == "idle" else None)
+            if pet.save["leaves"] % PARTY_EVERY == 0:      # 吃满一百片：先放礼花庆祝，放完再接着下面的
+                return pet.start("party", count=pet.save["leaves"], leaf=leaf, full=full)
+            after_meal(pet, leaf, full)
 
     def under(self, pet, index):
         return pet.sp.leaves[pet.leaf_kind]["frames"][min(index // CHEWS, BITES - 1)]

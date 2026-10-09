@@ -32,6 +32,8 @@ class Sprites:
         bubbles = info["bubbles_en"] if EN and "bubbles_en" in info else info["bubbles"]    # 英文界面用英文泡泡
         self.bubbles = {name: self._load(f) for name, f in bubbles.items()}
         self.frass = self._load(info["frass"])                    # 一颗便便
+        self.popper = self._load(info["popper"])                  # 礼花筒（每吃满一百片叶子，见 confetti.py）
+        self.confetti = [self._load(f) for f in info["confetti"]]  # 彩纸、彩带
         # 小卖部（货架在 art-source/items.js）：饰品是每个动作上面的一层，叶子是吃的时候垫在下面的一层
         self.shop = info["shop"]
         #   这两种画面只存了有画的那一块：每帧是 (画面, 放在哪)

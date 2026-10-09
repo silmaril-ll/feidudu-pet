@@ -92,6 +92,12 @@ async def main():
             fn = f"bubble_en_{name}.png"
             save_png(url, OUT / fn)
             manifest["bubbles_en"][name] = fn
+        save_png(r["popper"], OUT / "popper.png")               # 礼花筒和彩纸（每吃满一百片叶子）
+        manifest["popper"] = "popper.png"
+        manifest["confetti"] = []
+        for i, url in enumerate(r["confetti"]):
+            save_png(url, OUT / f"confetti_{i:02d}.png")
+            manifest["confetti"].append(f"confetti_{i:02d}.png")
         save_png(r["frass"], OUT / "frass.png")
         manifest["frass"] = "frass.png"
         skin = r["skin"]                                   # 伪装用的输入法皮肤

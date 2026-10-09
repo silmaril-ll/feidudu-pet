@@ -48,6 +48,7 @@ A little swallowtail caterpillar (*Papilio xuthus*) that lives on your screen: h
 - 爬到边上先抬起前半身晃一晃、探探路（真的毛毛虫在叶子边上就这样）
 - 爬过的地方留下细细的丝，常走的地方丝越来越多
 - 吃过叶子过一会儿，抬抬尾巴拉一颗小便便，掉到任务栏上
+- 每吃满一百片叶子，面前立起一个礼花筒，“砰”地撒一把彩纸庆祝（第100片！）
 - 鼠标停在它旁边，它会好奇地抬起前半身，头跟着鼠标转；鼠标跑到身后它就转身，慢慢挪远了就爬过去接着看，
   太高了够不着会说“够不着～”；鼠标飞快地从它身上划过，偶尔会吓一跳
 - 你在忙（一直在打字、滚网页）的时候，它更爱待在窗口上，还会躲到窗口后面，只露出脑袋和两只小脚偷看你（忙什么呢？）；
@@ -151,6 +152,7 @@ You need Windows and [Python 3](https://www.python.org/downloads/) (tick "Add py
 - At an edge, it rears up and feels around for the next foothold first, like real caterpillars do at a leaf's edge
 - Leaves a faint silk trail where it walks; favourite paths get more silk
 - A while after eating, it lifts its tail and drops a little frass pellet onto the taskbar
+- Every hundredth leaf, a party popper pops up in front of it and bursts into confetti (Leaf #100!)
 - Rest your cursor near it and it rears up curiously, head following the cursor; it turns around if you go behind it,
   crawls after the cursor if you drift away slowly, and says "够不着～" (can't reach!) when it's too high; whip the cursor across it and it may jump
 - While you're busy (typing or scrolling steadily) it likes to be on your window, and ducks behind its top edge to peek at you
