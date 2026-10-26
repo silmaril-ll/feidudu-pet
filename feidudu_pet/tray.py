@@ -6,6 +6,7 @@ from PyQt6.QtGui import QColor, QGuiApplication, QIcon, QPainter, QPainterPath, 
 from PyQt6.QtWidgets import QSystemTrayIcon
 
 from .menu import crayon_menu
+from .toys import put_away
 from .lang import tr
 
 LIGHT_INK = QColor("#f6efe0")      # 深色任务栏上
@@ -91,9 +92,10 @@ def make_tray(app, pet, sprites):
         hints.colorSchemeChanged.connect(lambda *_: tray.setIcon(butterfly_icon()))
     tray.setToolTip(tr("肥嘟嘟", "FeiDuDu"))
     menu = crayon_menu()
+    toy = menu.addAction(tr("收起玩具", "Put the toy away"), lambda *_: put_away(pet))      # 拿着玩具的时候才有这一项
     pause = menu.addAction(tr("安静一会儿", "Quiet time"), pet.toggle_pause)                 # 打游戏的时候：暂停、藏起来
     pause.setCheckable(True)
-    menu.aboutToShow.connect(lambda: pause.setChecked(bool(pet.paused)))
+    menu.aboutToShow.connect(lambda: (pause.setChecked(bool(pet.paused)), toy.setVisible(pet.toy is not None)))
     menu.addAction(tr("回到任务栏上", "Back to the taskbar"), lambda *_: (pet.unpause(), pet.undisguise(), pet.show(), pet.back_to_floor()))   # 万一卡在奇怪的地方
     menu.addSeparator()
     menu.addAction(tr("让它去睡（退出）", "Put it to bed (quit)"), app.quit)

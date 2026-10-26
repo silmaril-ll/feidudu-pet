@@ -6,6 +6,9 @@
 // 叶子（LEAVES）：label 名字、en 英文名字、weight 抽到的机会（0 = 不在抽奖里）、effect 吃完有什么特别、
 //   minutes 特别效果持续多久、parts 怎么画（叶柄在 (0,0)，叶子朝 +x 长，长 100 左右）。
 //   effect 的名字对应程序里 feidudu_pet/effects.py 的 EFFECTS；写了没有的名字就只是好吃，没有特别效果。
+// 玩具（TOYS）：买一次永久拥有，在右键「玩具箱」里拿出来玩（玩法在 feidudu_pet/toys.py）。label、en、price、
+//   kind（"hand" 拿在鼠标上）、parts 怎么画、points 几个要用到的点（都是画面坐标，单位和 parts 一样）：
+//   拿在手上的：grip 鼠标箭头尖对着的地方、tip 叶子中间、end 树枝头。
 const GACHA_PRICE = 5;          // 抽一片神秘叶子要几颗花肥
 
 // 把一组部件挪到 (x, y)、转 a 弧度、放大 s 倍
@@ -199,4 +202,20 @@ const LEAVES = {
   } },
   gold: { label: '金叶子', en: 'Golden leaf', weight: 12, effect: 'sparkle', minutes: 60, parts: () => coloredLeaf('#e9c046', '#fff1b0', '#f5dc7a') },
   dream: { label: '梦蝶叶', en: 'Dream leaf', weight: 2, effect: 'butterfly', minutes: 10, parts: () => coloredLeaf('#a9b8e8', '#eef1ff', '#cdd6f5') }
+};
+
+
+// ---------------------------------------------------------------- 玩具
+// 逗虫棒上的嫩叶（叶柄在原点，朝 +x 长）：挂在线上的、被它抢走趴着嚼的（pet.js 的 wand_leaf）都用这片
+const WAND_LEAF = () => [{ d: 'M0,0 C5,-6 15,-8 26,0 C15,8 5,6 0,0 Z', fill: '#9fcf6e', hatch: .25, lw: 1.1 },
+                         { line: 'M0,0 L23,0', lw: .7, color: '#d3eaa9', double: false }];
+const TOYS = {
+  // 逗虫棒：一根小树枝，头上一根线吊着一片嫩叶（拔河的时候叶子咬在它嘴里，线从树枝头牵过去）
+  wand: { label: '逗虫棒', en: 'Leaf wand', price: 30, kind: 'hand',
+    points: { grip: [0, 0], end: [-66, -52], tip: [-78, -30], stem: [-76, -36] },     // end：树枝头（线从这儿垂下去）；stem：线拴在叶柄上的地方；tip：它咬的地方
+    parts: () => [
+      { d: ART.limb([[0, 0], [-24, -24], [-50, -44], [-66, -52]], 2.6), fill: '#9b6b3e', hatch: -1.2, lw: 1.1 },
+      { line: 'M-66,-52 C-70,-46 -74,-40 -76,-36', lw: 1, color: '#a08a6a', double: false },
+      ...place(WAND_LEAF(), -76, -36, 1.75, 1)
+    ] }
 };

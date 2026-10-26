@@ -27,6 +27,16 @@ def add_to_menu(menu, pet):
                                 lambda *_, n=name: buy_accessory(pet, n))
         action.setEnabled(not have and frass >= acc["price"])
 
+    if sp.toys:                                                 # 玩具：买一次永久拥有（toys.py）
+        shop.addSeparator()
+        have_toys = pet.save.get("toys", [])
+        for name, toy in sp.toys.items():
+            have = name in have_toys
+            cost = tr("买过了", "owned") if have else tr(f"{toy['price']} 颗", f"{toy['price']} frass")
+            action = shop.addAction(tr(f"{toy['label']}（{cost}）", f"{toy['label']} ({cost})"),
+                                    lambda *_, n=name: buy_toy(pet, n))
+            action.setEnabled(not have and frass >= toy["price"])
+
     mine = [n for n in owned if n in sp.accessories]           # 货架上撤掉的饰品就不显示了
     if mine:
         closet = add_submenu(menu, tr("衣柜", "Wardrobe"))
@@ -84,3 +94,14 @@ def wearing_layer(pet, anim):
     """正戴着的饰品在这个动作里的画面（没戴、或者这个动作没有饰品画面，就是 None）。"""
     acc = pet.sp.accessories.get(pet.save.get("wearing"))
     return acc["anims"].get(anim) if acc else None
+
+
+def buy_toy(pet, name):
+    """买一样玩具：永久的，买了就在右键「玩具箱」里。"""
+    toy = pet.sp.toys[name]
+    if pet.save.get("frass", 0) < toy["price"] or name in pet.save.get("toys", []):
+        return
+    pay(pet, toy["price"])
+    pet.save.setdefault("toys", []).append(name)
+    write_save(pet.save)
+    pet.say("play", 1.8)

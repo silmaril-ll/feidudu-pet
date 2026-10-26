@@ -49,6 +49,7 @@ A little swallowtail caterpillar (*Papilio xuthus*) that lives on your screen: h
 - 爬过的地方留下细细的丝，常走的地方丝越来越多
 - 吃过叶子过一会儿，抬抬尾巴拉一颗小便便，掉到任务栏上
 - 每吃满一百片叶子，面前立起一个礼花筒，“砰”地撒一把彩纸庆祝（第100片！）
+- 偶尔在脚边发现几颗露珠，低头咕嘟咕嘟喝掉（早上更常见）
 - 鼠标停在它旁边，它会好奇地抬起前半身，头跟着鼠标转；鼠标跑到身后它就转身，慢慢挪远了就爬过去接着看，
   太高了够不着会说“够不着～”；鼠标飞快地从它身上划过，偶尔会吓一跳
 - 你在忙（一直在打字、滚网页）的时候，它更爱待在窗口上，还会躲到窗口后面，只露出脑袋和两只小脚偷看你（忙什么呢？）；
@@ -70,7 +71,7 @@ A little swallowtail caterpillar (*Papilio xuthus*) that lives on your screen: h
 | 右键托盘图标 | 安静一会儿、回到任务栏上（万一它卡在奇怪的地方）、退出 |
 | 单击托盘图标 | 扭一扭；在安静的时候就叫它出来 |
 
-**伪装**：双击它（或者按 Ctrl+Alt+Z），肥嘟嘟、丝、便便、托盘图标全藏好，只剩一个卡通皮肤的“输入法”——
+**伪装**：双击它（或者按 Ctrl+Alt+Z），肥嘟嘟、丝、托盘图标全藏好（地上的便便顺手帮你捡起来），只剩一个卡通皮肤的“输入法”——
 一只趴着的肥嘟嘟，背上浮着「中/英」「全半角」「表情」「设置」小圆按钮，点了会像真的一样切换，还能拖动。
 回来以后双击卡片上的肥嘟嘟，或者右键「还原」。
 
@@ -92,6 +93,8 @@ A little swallowtail caterpillar (*Papilio xuthus*) that lives on your screen: h
   柑橘凤蝶的毛毛虫很挑食：只吃芸香科（柑橘、花椒这一家）的叶子，别的再好看也不当饭
 - **饰品**：蝴蝶结、小橘子发卡、小柠檬发卡、触角发箍 10；猫耳、兔耳、熊耳头箍、生日帽 12；玳瑁眼镜（戴在假眼睛上）、小围巾 14；
   花环 15；小草帽、小书包 16；小礼帽、圣诞帽 18；小王冠 20 颗。买过的在右键「衣柜」里换着戴
+- **玩具**（买一次永远是你的，在右键「玩具箱」里拿出来玩；玩一阵它会“玩累了…”，歇几分钟再来）：
+  **逗虫棒** 30（鼠标挑着一根软软的线，线头拴着一片嫩叶，一甩就晃；它追着跑、抬头够，叶子在嘴边停一下就咬住和你拔河——你松劲它就“抢到了！”，使劲拉叶子就滑出去，它“哼！”）
 
 吃了几片叶子、攒了几颗花肥、买过什么都记在 `feidudu_save.json` 里；删掉它就回到刚孵出来的样子。
 
@@ -153,6 +156,7 @@ You need Windows and [Python 3](https://www.python.org/downloads/) (tick "Add py
 - Leaves a faint silk trail where it walks; favourite paths get more silk
 - A while after eating, it lifts its tail and drops a little frass pellet onto the taskbar
 - Every hundredth leaf, a party popper pops up in front of it and bursts into confetti (Leaf #100!)
+- Now and then it finds a few dewdrops by its feet and drinks them up (more often in the morning)
 - Rest your cursor near it and it rears up curiously, head following the cursor; it turns around if you go behind it,
   crawls after the cursor if you drift away slowly, and says "够不着～" (can't reach!) when it's too high; whip the cursor across it and it may jump
 - While you're busy (typing or scrolling steadily) it likes to be on your window, and ducks behind its top edge to peek at you
@@ -175,7 +179,7 @@ You need Windows and [Python 3](https://www.python.org/downloads/) (tick "Add py
 | Right-click the tray icon | Quiet time, back to the taskbar (in case it gets stuck somewhere odd), quit |
 | Click the tray icon | A wiggle; during quiet time, calls it back out |
 
-**Disguise:** double-click it (or press Ctrl+Alt+Z) and the caterpillar, silk, frass and tray icon all hide.
+**Disguise:** double-click it (or press Ctrl+Alt+Z) and the caterpillar, silk and tray icon all hide (any frass on the ground gets picked up for you).
 All that's left is a cartoon "input method skin": a caterpillar lying down with little round buttons along its back
 (中/英, full/half width, emoji, settings) that toggle like the real thing and can be dragged around.
 Double-click the caterpillar on the skin, or right-click → 还原, to bring it back.
@@ -199,6 +203,8 @@ Spend collected frass (right-click → 小卖部):
   **click the leaf to take it away** (no frass spent). Swallowtail caterpillars really are picky specialists: they only eat plants in the citrus family (Rutaceae)
 - **Accessories**: bow, little orange and lemon hair clips, bobble antennae 10; cat / bunny / bear ear headbands, party hat 12; tortoiseshell glasses (worn on the false eyes), scarf 14;
   flower crown 15; straw hat, backpack 16; top hat, Christmas hat 18; little crown 20. Switch between them in right-click → 衣柜 (wardrobe)
+- **Toys** (yours forever once bought; take them out from right-click → Toy box; after a while it gets tired and needs a few minutes' rest):
+  **leaf wand** 30 (a leaf on a soft, swingy thread; it chases the leaf and rears up for it; hold it by its mouth and it bites and plays tug-of-war — ease off and it wins, pull hard and the leaf slips out)
 
 Leaves eaten, frass saved and things bought live in `feidudu_save.json`; delete it to start over from a fresh hatchling.
 

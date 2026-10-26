@@ -13,11 +13,12 @@ PyQt6 写的 Windows 桌宠。`feidudu.pyw` 是启动器（双击就开：先看
 | `feidudu_pet/config.py` | 所有可调的数字（速度、大小、拉扯力度……）。用户自己调的写在根目录 `my_config.py`（不进 git），`feidudu_pet/__init__.py` 在别的模块读 config 之前把它盖上去 |
 | `feidudu_pet/pet.py` | 肥嘟嘟本体窗口：位置、每一拍、画、鼠标、右键菜单 |
 | `feidudu_pet/world.py` | 各个“面”：怎么沿着爬、到头怎么转弯、从哪吐丝、落在哪 |
-| `feidudu_pet/behaviors/` | **一个动作一个文件**（idle、crawl、wave、wiggle、angry、snake、sleep、munch、nibble、refuse、frass、hang、lifted、tug、pupa、butterfly、approach、cling、comfy、look、peek、party） |
+| `feidudu_pet/behaviors/` | **一个动作一个文件**（idle、crawl、wave、wiggle、angry、snake、sleep、munch、nibble、refuse、frass、hang、lifted、tug、pupa、butterfly、approach、cling、comfy、look、peek、party、chase、tussle、dew） |
 | `feidudu_pet/senses.py` | 肥嘟嘟的感觉：每拍看鼠标在哪、多快（`pet.senses.cursor` / `speed`），鼠标键按没按着（`pressed`、`pressed_at`），人多久没碰电脑（`idle`、`away`），在不在忙（`busy`、`busy_since`、`done_busy`） |
 | `feidudu_pet/lang.py` | 界面语言（`config.LANGUAGE`，"zh" 默认 / "en"）：菜单上的字写成 `tr("中文", "English")`；泡泡、叶子饰品名字是画好的，`sprites.py` 按语言挑 |
 | `feidudu_pet/clock.py` | 肥嘟嘟看的钟（`config.TIMEZONE`）：按时间打招呼、晚上犯困 |
 | `feidudu_pet/win32.py` | 只有这里碰 Windows API（找活动窗口、不抢焦点、伪装快捷键 `GlobalHotkey`、人多久没碰电脑 `idle_seconds`、鼠标键按没按着 `buttons_down`、最前面是哪个程序 `foreground_app`） |
+| `feidudu_pet/toys.py` | 玩具（买一次永久拥有，右键「玩具箱」）：跟着鼠标的 `HandToy`（逗虫棒，树枝头垂着软线 `Line`，拔河时叶子在它嘴上）、玩累了、玩具箱菜单 |
 | `feidudu_pet/confetti.py` | 礼花：每吃满一百片叶子，透明点不到的大窗口里立起礼花筒、喷彩纸（只在放的几秒里开着，30 帧/秒） |
 | `feidudu_pet/silk.py` | 画那根丝的透明小窗口 |
 | `feidudu_pet/silk_trail.py` | 丝垫：爬过的地方留下的丝（任务栏一条、活动窗口上沿一条，都点不到） |
@@ -25,7 +26,7 @@ PyQt6 写的 Windows 桌宠。`feidudu.pyw` 是启动器（双击就开：先看
 | `feidudu_pet/menu.py` | 蜡笔边框的菜单（`crayon_menu` / `add_submenu`）：QMenu + 样式表，画在 `art-source/menu.js`，字用系统的 |
 | `feidudu_pet/shop.py` | 小卖部、衣柜的右键菜单，买东西、戴饰品 |
 | `feidudu_pet/effects.py` | 特别叶子的效果，按名字找：吃完的（sparkle、scent、butterfly、tingly、plenty、sour、long_nap）；吃之前的 `refuses`（picky：枫叶这种不是芸香科的不吃，进 `refuse` 动作：叶子摆在嘴前、闻一闻、才不吃、我只吃芸香科，然后等你点叶子拿走（`pet.under_rect` 记着叶子在哪），`REFUSE_WAIT` 秒没人管就扭头；花肥不扣） |
-| `art-source/items.js` | **货架**：饰品和叶子（样子、名字、价钱、抽到的机会、效果），加减东西只改这里再跑 runpet.py |
+| `art-source/items.js` | **货架**：饰品、叶子、玩具（样子、名字、价钱、抽到的机会、效果），加减东西只改这里再跑 runpet.py |
 | `feidudu_pet/pellets.py` | 便便：一颗一个小窗口，往下掉、落在任务栏上，点一下捡起来 |
 | `feidudu_pet/sprites.py`、`save.py`、`tray.py`、`app.py` | 读画面、存档、托盘、启动 |
 
@@ -66,6 +67,8 @@ PyQt6 写的 Windows 桌宠。`feidudu.pyw` 是启动器（双击就开：先看
   掉头、换地方就开新的一根。只记在这次运行里。
 - **便便**（`behaviors/frass.py`、`pellets.py`）：吃一片叶子 `save["gut"]` 加 `FRASS_PER_LEAF`；有存货时 `frass`
   会被随机挑中（窗口上沿不拉），用 `strain` 帧抬尾巴，从尾巴尖掉一颗。捡起来记在 `save["frass"]`（以后可以拿来换东西）。
+  伪装、暂停的时候地上的便便自动全捡起来（`pick_all_frass`）：Windows 上透明小窗口藏起来再显示可能不重画，
+  落地的便便不会再动，就一直看不见（实机遇到过）。
 - **吃饱犯困**：吃完 `NAP_AFTER_MEAL` 秒之内白天也想睡；睡着一次就不困了（`sleep.enter` 把 `pet.fed_at` 清零）。
 - **伪装**（`disguise.py`、`pet.disguise` / `pet.undisguise`）：停掉 `pet.timer`，藏起本体、丝、丝垫、便便、托盘图标，
   显示 `ImeBar`。还原时一切接着原来的状态走。状态栏拖过的位置存在 `save["ime_pos"]`。
@@ -82,6 +85,22 @@ PyQt6 写的 Windows 桌宠。`feidudu.pyw` 是启动器（双击就开：先看
   （借 `wave` 的画面抬身子晃，泡泡“第100片！”…“第3000片！”，再往后“又一百片！”），同时 `pet.confetti.burst` 在头前面立礼花筒、
   `POP_AT` 秒后喷 `PIECES` 片彩纸（`pet.js` 的 `popperPic`、`confettiPics`）。放完再走 `munch.after_meal`（特别叶子的效果、好吃、嗝）。
   `party` 算 `busy`：这时候戳它、喂它都不打断。伪装、暂停时礼花收起来。
+- **玩具**（`toys.py`，货架在 `items.js` 的 `TOYS`，存档 `save["toys"]`）：永久拥有，右键「玩具箱」拿出来。现在只有逗虫棒
+  （镜子、团扇、喷壶、叶子小床试过以后下架了；存档里有、货架上没有的就当没有）。
+  逗虫棒：`pet.toy`，`pet.hand`（`HandToy`）是跟着鼠标、点不到的小窗口，树枝画面（`bare`）的 `grip` 点对着箭头尖；
+  线是程序每帧算的软线（`toys.Line`：8 颗小珠子，XPBD，第一颗拴在树枝头 `end`，最后一颗是叶柄 `stem`），叶子（`leaf`）拴在线头、顺着最后一节线转（`turn`），
+  叶子有空气阻力（`AIR`），线最多拉到 `LONGEST` 倍；线多长、多软、多沉、晃多久是 `WAND_LINE`、`WAND_STRETCH`、`WAND_GRAVITY`、`WAND_DAMP`。
+  线晃停了、鼠标没动就不算也不重画（`Line.resting`）。它追、咬的点是 `HandToy.tip()`（跟着叶子晃）；
+  这时候看鼠标、摸摸都不管（`pet.step` 里 `self.toy is None` 才调），改由 `toys.tick` 让它进 `chase`：
+  叶子远了爬过去、近了用 look 的帧抬头对着，在嘴边停 `SNATCH` 秒就咬住，进 `tussle` 拔河：后脚（`pull` 画面的支点）抓牢，
+  `HandToy.mouth` 设成它的嘴，叶柄拴在嘴边（线两头都拴住：近了垂着，远了绷直）；线绷直（`TAUT` 倍长）以后再往外拉才算拉力，选 `pull` 帧（不冒角、嘟嘴）、
+  转向树枝。松劲 `TUSSLE_EASE` 秒 → 它赢（`Chase.won`：“抢到了！”，叶子 `bare` `REGROW` 秒；回 `chase` 先趴着嚼 `CHEW` 秒（munch 的帧，`under()` 垫着 `wand_leaf` 一口口变小，
+  这片嫩叶是 `pet.js` 单独画的、不在货架上，不算吃了一片）→“好吃！”→ 扭 `WIGGLE` 秒；叶子长回来之前不追光秃秃的线）；
+  拉满坚持 `TUSSLE_SLIP` 秒 → 叶子滑出去（“哼！”，`chase_bite_after` 之前不再咬）。
+  玩累了：在 `chase`/`tussle` 的时间攒够 `TOY_PLAY` 秒，“玩累了…”，收起来，`TOY_REST` 分钟里不肯玩。
+  伪装、暂停、人走开时玩具收起来。
+- **喝露水**（`behaviors/dew.py`）：随机挑中的小事件（早上 `DEW_HOURS` 想做程度 `DEW_MORNING`，别的时候 `DEW_OTHER`，
+  喝过隔 `DEW_AGAIN` 分钟）：嘴前面地上冒出 3 颗露珠（`under()` 垫在身体下面，`drop_*.png`），“露水！”→ 低头喝（munch 的帧）→ “解渴～”。
 - **蛇形警戒**（`behaviors/snake.py`）：`pet.poke` 记最近几次戳的时间，`SNAKE_WINDOW` 秒里戳了 `SNAKE_POKES` 下就进 `snake`。
 - **人走开 / 回来**（`senses.py`、`sleep.nod_off` / `sleep.welcome`、`behaviors/approach.py`）：`win32.idle_seconds()`
   （`GetLastInputInfo`，别的系统上看鼠标有没有动）超过 `AWAY_AFTER` 秒算走开，它在地上闲着就睡（`pet.away_nap`，不自己醒）；

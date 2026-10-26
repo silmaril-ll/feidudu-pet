@@ -28,6 +28,7 @@ from .behaviors.sleep import nod_off, welcome
 from .config import (BUBBLE_MIN, BUBBLE_ROOM, DEFAULT_SIZE, FRASS_ON_SCREEN, GAME_CHECK_MS, GAME_TITLES, GAMES,
                      POKE_WIGGLE, REACH,
                      SCENTS, SIZE_OPTIONS, SNAKE_POKES, SNAKE_WINDOW, SPARKLES, TICK_MS, WINDOW_CHECK_TICKS)
+from . import toys
 from .confetti import Confetti
 from .disguise import ImeBar, default_spot
 from .lang import tr
@@ -53,6 +54,8 @@ class FeiDuDu(QWidget):
         self.silk = SilkThread()
         self.silk_trail = SilkTrail()
         self.confetti = Confetti(sprites)   # 每吃满一百片叶子放的礼花
+        self.hand = toys.HandToy()          # 拿在鼠标上的玩具（逗虫棒、喷壶、团扇）
+        self.toy = None                     # 正拿着哪样玩具
         self.pellets = []               # 地上还没捡的便便
         self.ime = ImeBar(sprites.skin, self.undisguise, self.remember_ime_spot)    # 伪装用的输入法皮肤
         self.tray = None                # 托盘图标（app.py 放进来），伪装时藏起来
@@ -123,6 +126,22 @@ class FeiDuDu(QWidget):
         self.peek_seq = []
         self.party_seq = []
         self.party_after = (None, False)
+        self.toy_played = 0.0           # 这一阵玩了多少秒（攒够 TOY_PLAY 就玩累了）
+        self.toy_rest_until = 0.0       # 玩累了，歇到什么时候
+        self.dew_next = 0.0             # 喝过露水，下次最早什么时候再遇到
+        self.dew_left = 0               # 脚边还剩几颗露珠
+        self.tussle_grip = QPointF()    # 拔河：后脚抓着的地方
+        self.tussle_tension = 0.0
+        self.tussle_hold = 0.0
+        self.tussle_ease = 0.0
+        self.tussle_since = 0.0
+        self.tussle_angle = 180.0
+        self.chase_bite_after = 0.0     # 叶子刚滑脱，过一会儿才会再咬
+        self.chase_crawling = False
+        self.chase_near = 0.0
+        self.chase_turned = 0.0
+        self.chase_happy_until = 0.0
+        self.chase_chew_until = 0.0
         self.rest_next = 0.0            # 提醒你歇一下：下次最早什么时候
 
         # 活动窗口
@@ -199,10 +218,11 @@ class FeiDuDu(QWidget):
             welcome(self)
         elif self.senses.away:                        # 人走开了：找地方睡
             nod_off(self)
-        else:
+        elif self.toy is None:
             notice(self)                              # 鼠标停在旁边：看看它
             self.feel_strokes()                       # 鼠标在身上划：摸摸
             check_in(self)                            # 忙完啦？歇一下？
+        toys.tick(self)                               # 拿着玩具的时候：追、喝、扇，玩累了就收起来
         if self.tick % WINDOW_CHECK_TICKS == 0 or self.state == "cling":     # 抓着窗口的时候每拍都看
             world.check_window(self)
             hold_on(self)
@@ -242,12 +262,15 @@ class FeiDuDu(QWidget):
     # ---------- 伪装成输入法
 
     def disguise(self, *_):
-        """藏起来：变成一条输入法状态栏。一切停下，丝、丝垫、便便、托盘图标都藏好。"""
+        """藏起来：变成一条输入法状态栏。一切停下，丝、丝垫、托盘图标都藏好；地上的便便顺手全捡起来攒着
+        （Windows 上透明的小窗口藏起来再显示有时候不重画，便便就看不见了，干脆捡走）。"""
         if self.ime.isVisible() or self.paused:
             return
+        self.pick_all_frass()
         self.timer.stop()
         self.bubble = None
         self.confetti.stop()
+        self.hide_toys()
         for w in (self, self.silk, self.silk_trail.floor_mat, self.silk_trail.window_mat, *self.pellets):
             w.hide()
         if self.tray:
@@ -264,8 +287,6 @@ class FeiDuDu(QWidget):
         if not self.ime.isVisible():
             return
         self.ime.hide()
-        for pellet in self.pellets:
-            pellet.show()
         if self.tray:
             self.tray.show()
         self.show()
@@ -274,16 +295,21 @@ class FeiDuDu(QWidget):
         self.timer.start(TICK_MS)
         self.sync()
 
+    def hide_toys(self):
+        toys.put_away(self, quiet=True)
+
     # ---------- 安静一会儿（暂停）
 
     def pause(self, why="manual"):
         """让它去睡：一切停下、全藏起来（伪装的输入法也藏），只留托盘图标。停着的时候不占资源。"""
         if self.paused:
             return
+        self.pick_all_frass()                                        # 地上的便便先捡起来攒着（和伪装一样）
         self.paused = why
         self.timer.stop()
         self.bubble = None
         self.confetti.stop()
+        self.hide_toys()
         for w in (self, self.silk, self.silk_trail.floor_mat, self.silk_trail.window_mat, self.ime, *self.pellets):
             w.hide()
         if self.tray:
@@ -295,8 +321,6 @@ class FeiDuDu(QWidget):
         if not self.paused:
             return
         self.paused = None
-        for pellet in self.pellets:
-            pellet.show()
         if self.tray:
             self.tray.setToolTip(tr("肥嘟嘟", "FeiDuDu"))
         self.show()
@@ -328,7 +352,7 @@ class FeiDuDu(QWidget):
     # ---------- 右键菜单里的操作
 
     def busy(self):
-        return self.state in ("hang", "lifted", "tug", "pupa", "butterfly", "cling", "party")
+        return self.state in ("hang", "lifted", "tug", "pupa", "butterfly", "cling", "party", "tussle")
 
     def feed(self, *_):
         """喂一片柑橘叶。睡着了、吃饱了、在墙上吊着的时候不吃（叶子不给出去）。"""
@@ -377,6 +401,9 @@ class FeiDuDu(QWidget):
         """右键菜单：只留要人来做的事（喂、捡、买、穿、大小、退出）。
         藏起来 = 双击 / 快捷键，扭一扭 = 单击，睡觉醒来、去窗口回任务栏它自己会（托盘里还有「回到任务栏上」救急）。"""
         menu = crayon_menu()
+        if self.toy:                                          # 拿着玩具的时候，第一项就是收起来
+            menu.addAction(toys.put_away_label(self), lambda *_: toys.put_away(self))
+            menu.addSeparator()
         items = []
         for b in REGISTRY.values():
             items += [(b.menu_order, text, fn) for text, fn in b.menu_items(self)]
@@ -384,6 +411,7 @@ class FeiDuDu(QWidget):
             menu.addAction(text, fn)
         menu.addSeparator()
         shop.add_to_menu(menu, self)
+        toys.add_to_menu(menu, self)
         menu.addSeparator()
         size_menu = add_submenu(menu, tr("大小", "Size"))
         for zh, en, value in SIZE_OPTIONS:

@@ -98,6 +98,19 @@ async def main():
         for i, url in enumerate(r["confetti"]):
             save_png(url, OUT / f"confetti_{i:02d}.png")
             manifest["confetti"].append(f"confetti_{i:02d}.png")
+        manifest["toys"] = {}                                    # 玩具（货架在 items.js 的 TOYS）
+        for name, toy in r["toys"].items():
+            save_png(toy["file"], OUT / f"toy_{name}.png")
+            entry = {k: v for k, v in toy.items() if k not in ("file", "bare", "leaf")} | {"file": f"toy_{name}.png"}
+            for extra in ("bare", "leaf"):                       # 逗虫棒只剩树枝、只有叶子的样子
+                if extra in toy:
+                    save_png(toy[extra], OUT / f"toy_{name}_{extra}.png")
+                    entry[extra] = f"toy_{name}_{extra}.png"
+            manifest["toys"][name] = entry
+        manifest["drops"] = []
+        for i, url in enumerate(r["drops"]):
+            save_png(url, OUT / f"drop_{i}.png")
+            manifest["drops"].append(f"drop_{i}.png")
         save_png(r["frass"], OUT / "frass.png")
         manifest["frass"] = "frass.png"
         skin = r["skin"]                                   # 伪装用的输入法皮肤

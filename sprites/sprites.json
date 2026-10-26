@@ -138,6 +138,28 @@
     255
    ]
   },
+  "pull": {
+   "files": [
+    "pull_00.png",
+    "pull_01.png",
+    "pull_02.png",
+    "pull_03.png",
+    "pull_04.png",
+    "pull_05.png"
+   ],
+   "anchor": [
+    382.40000000000003,
+    230
+   ],
+   "w": 560,
+   "h": 260,
+   "bbox": [
+    48,
+    96,
+    432,
+    255
+   ]
+  },
   "wave": {
    "files": [
     "wave_00.png",
@@ -499,7 +521,15 @@
   "leaves_2900": "bubble_leaves_2900.png",
   "leaves_3000": "bubble_leaves_3000.png",
   "leaves_more": "bubble_leaves_more.png",
-  "hooray": "bubble_hooray.png"
+  "hooray": "bubble_hooray.png",
+  "got_it": "bubble_got_it.png",
+  "wait": "bubble_wait.png",
+  "grr": "bubble_grr.png",
+  "gulp": "bubble_gulp.png",
+  "quenched": "bubble_quenched.png",
+  "dew": "bubble_dew.png",
+  "tired": "bubble_tired.png",
+  "play": "bubble_play.png"
  },
  "bubbles_en": {
   "leaf_citrus": "bubble_en_leaf_citrus.png",
@@ -588,7 +618,15 @@
   "leaves_2900": "bubble_en_leaves_2900.png",
   "leaves_3000": "bubble_en_leaves_3000.png",
   "leaves_more": "bubble_en_leaves_more.png",
-  "hooray": "bubble_en_hooray.png"
+  "hooray": "bubble_en_hooray.png",
+  "got_it": "bubble_en_got_it.png",
+  "wait": "bubble_en_wait.png",
+  "grr": "bubble_en_grr.png",
+  "gulp": "bubble_en_gulp.png",
+  "quenched": "bubble_en_quenched.png",
+  "dew": "bubble_en_dew.png",
+  "tired": "bubble_en_tired.png",
+  "play": "bubble_en_play.png"
  },
  "shop": {
   "gacha_price": 5
@@ -892,6 +930,50 @@
      },
      {
       "file": "acc_cat_ears_tug_05.png",
+      "at": [
+       120,
+       60
+      ]
+     }
+    ],
+    "pull": [
+     {
+      "file": "acc_cat_ears_pull_00.png",
+      "at": [
+       181,
+       61
+      ]
+     },
+     {
+      "file": "acc_cat_ears_pull_01.png",
+      "at": [
+       169,
+       62
+      ]
+     },
+     {
+      "file": "acc_cat_ears_pull_02.png",
+      "at": [
+       157,
+       61
+      ]
+     },
+     {
+      "file": "acc_cat_ears_pull_03.png",
+      "at": [
+       145,
+       61
+      ]
+     },
+     {
+      "file": "acc_cat_ears_pull_04.png",
+      "at": [
+       136,
+       58
+      ]
+     },
+     {
+      "file": "acc_cat_ears_pull_05.png",
       "at": [
        120,
        60
@@ -1656,6 +1738,50 @@
       ]
      }
     ],
+    "pull": [
+     {
+      "file": "acc_flowers_pull_00.png",
+      "at": [
+       155,
+       84
+      ]
+     },
+     {
+      "file": "acc_flowers_pull_01.png",
+      "at": [
+       141,
+       81
+      ]
+     },
+     {
+      "file": "acc_flowers_pull_02.png",
+      "at": [
+       127,
+       83
+      ]
+     },
+     {
+      "file": "acc_flowers_pull_03.png",
+      "at": [
+       115,
+       83
+      ]
+     },
+     {
+      "file": "acc_flowers_pull_04.png",
+      "at": [
+       100,
+       82
+      ]
+     },
+     {
+      "file": "acc_flowers_pull_05.png",
+      "at": [
+       88,
+       78
+      ]
+     }
+    ],
     "wave": [
      {
       "file": "acc_flowers_wave_00.png",
@@ -2408,6 +2534,50 @@
      },
      {
       "file": "acc_tophat_tug_05.png",
+      "at": [
+       135,
+       59
+      ]
+     }
+    ],
+    "pull": [
+     {
+      "file": "acc_tophat_pull_00.png",
+      "at": [
+       188,
+       59
+      ]
+     },
+     {
+      "file": "acc_tophat_pull_01.png",
+      "at": [
+       175,
+       61
+      ]
+     },
+     {
+      "file": "acc_tophat_pull_02.png",
+      "at": [
+       163,
+       61
+      ]
+     },
+     {
+      "file": "acc_tophat_pull_03.png",
+      "at": [
+       154,
+       61
+      ]
+     },
+     {
+      "file": "acc_tophat_pull_04.png",
+      "at": [
+       142,
+       60
+      ]
+     },
+     {
+      "file": "acc_tophat_pull_05.png",
       "at": [
        135,
        59
@@ -3172,6 +3342,50 @@
       ]
      }
     ],
+    "pull": [
+     {
+      "file": "acc_bunny_ears_pull_00.png",
+      "at": [
+       189,
+       38
+      ]
+     },
+     {
+      "file": "acc_bunny_ears_pull_01.png",
+      "at": [
+       174,
+       37
+      ]
+     },
+     {
+      "file": "acc_bunny_ears_pull_02.png",
+      "at": [
+       162,
+       37
+      ]
+     },
+     {
+      "file": "acc_bunny_ears_pull_03.png",
+      "at": [
+       151,
+       38
+      ]
+     },
+     {
+      "file": "acc_bunny_ears_pull_04.png",
+      "at": [
+       141,
+       38
+      ]
+     },
+     {
+      "file": "acc_bunny_ears_pull_05.png",
+      "at": [
+       130,
+       38
+      ]
+     }
+    ],
     "wave": [
      {
       "file": "acc_bunny_ears_wave_00.png",
@@ -3924,6 +4138,50 @@
      },
      {
       "file": "acc_bear_ears_tug_05.png",
+      "at": [
+       121,
+       73
+      ]
+     }
+    ],
+    "pull": [
+     {
+      "file": "acc_bear_ears_pull_00.png",
+      "at": [
+       182,
+       77
+      ]
+     },
+     {
+      "file": "acc_bear_ears_pull_01.png",
+      "at": [
+       169,
+       76
+      ]
+     },
+     {
+      "file": "acc_bear_ears_pull_02.png",
+      "at": [
+       157,
+       76
+      ]
+     },
+     {
+      "file": "acc_bear_ears_pull_03.png",
+      "at": [
+       144,
+       73
+      ]
+     },
+     {
+      "file": "acc_bear_ears_pull_04.png",
+      "at": [
+       136,
+       73
+      ]
+     },
+     {
+      "file": "acc_bear_ears_pull_05.png",
       "at": [
        121,
        73
@@ -4688,6 +4946,50 @@
       ]
      }
     ],
+    "pull": [
+     {
+      "file": "acc_antennae_pull_00.png",
+      "at": [
+       191,
+       38
+      ]
+     },
+     {
+      "file": "acc_antennae_pull_01.png",
+      "at": [
+       177,
+       40
+      ]
+     },
+     {
+      "file": "acc_antennae_pull_02.png",
+      "at": [
+       165,
+       39
+      ]
+     },
+     {
+      "file": "acc_antennae_pull_03.png",
+      "at": [
+       153,
+       40
+      ]
+     },
+     {
+      "file": "acc_antennae_pull_04.png",
+      "at": [
+       144,
+       40
+      ]
+     },
+     {
+      "file": "acc_antennae_pull_05.png",
+      "at": [
+       134,
+       41
+      ]
+     }
+    ],
     "wave": [
      {
       "file": "acc_antennae_wave_00.png",
@@ -5440,6 +5742,50 @@
      },
      {
       "file": "acc_glasses_tug_05.png",
+      "at": [
+       96,
+       113
+      ]
+     }
+    ],
+    "pull": [
+     {
+      "file": "acc_glasses_pull_00.png",
+      "at": [
+       164,
+       119
+      ]
+     },
+     {
+      "file": "acc_glasses_pull_01.png",
+      "at": [
+       150,
+       118
+      ]
+     },
+     {
+      "file": "acc_glasses_pull_02.png",
+      "at": [
+       137,
+       117
+      ]
+     },
+     {
+      "file": "acc_glasses_pull_03.png",
+      "at": [
+       123,
+       116
+      ]
+     },
+     {
+      "file": "acc_glasses_pull_04.png",
+      "at": [
+       109,
+       114
+      ]
+     },
+     {
+      "file": "acc_glasses_pull_05.png",
       "at": [
        96,
        113
@@ -6204,6 +6550,50 @@
       ]
      }
     ],
+    "pull": [
+     {
+      "file": "acc_straw_hat_pull_00.png",
+      "at": [
+       177,
+       73
+      ]
+     },
+     {
+      "file": "acc_straw_hat_pull_01.png",
+      "at": [
+       165,
+       72
+      ]
+     },
+     {
+      "file": "acc_straw_hat_pull_02.png",
+      "at": [
+       155,
+       71
+      ]
+     },
+     {
+      "file": "acc_straw_hat_pull_03.png",
+      "at": [
+       141,
+       74
+      ]
+     },
+     {
+      "file": "acc_straw_hat_pull_04.png",
+      "at": [
+       132,
+       74
+      ]
+     },
+     {
+      "file": "acc_straw_hat_pull_05.png",
+      "at": [
+       117,
+       73
+      ]
+     }
+    ],
     "wave": [
      {
       "file": "acc_straw_hat_wave_00.png",
@@ -6956,6 +7346,50 @@
      },
      {
       "file": "acc_scarf_tug_05.png",
+      "at": [
+       185,
+       87
+      ]
+     }
+    ],
+    "pull": [
+     {
+      "file": "acc_scarf_pull_00.png",
+      "at": [
+       229,
+       91
+      ]
+     },
+     {
+      "file": "acc_scarf_pull_01.png",
+      "at": [
+       219,
+       90
+      ]
+     },
+     {
+      "file": "acc_scarf_pull_02.png",
+      "at": [
+       209,
+       89
+      ]
+     },
+     {
+      "file": "acc_scarf_pull_03.png",
+      "at": [
+       203,
+       87
+      ]
+     },
+     {
+      "file": "acc_scarf_pull_04.png",
+      "at": [
+       196,
+       87
+      ]
+     },
+     {
+      "file": "acc_scarf_pull_05.png",
       "at": [
        185,
        87
@@ -7720,6 +8154,50 @@
       ]
      }
     ],
+    "pull": [
+     {
+      "file": "acc_xmas_hat_pull_00.png",
+      "at": [
+       186,
+       36
+      ]
+     },
+     {
+      "file": "acc_xmas_hat_pull_01.png",
+      "at": [
+       175,
+       38
+      ]
+     },
+     {
+      "file": "acc_xmas_hat_pull_02.png",
+      "at": [
+       164,
+       37
+      ]
+     },
+     {
+      "file": "acc_xmas_hat_pull_03.png",
+      "at": [
+       153,
+       36
+      ]
+     },
+     {
+      "file": "acc_xmas_hat_pull_04.png",
+      "at": [
+       140,
+       36
+      ]
+     },
+     {
+      "file": "acc_xmas_hat_pull_05.png",
+      "at": [
+       131,
+       38
+      ]
+     }
+    ],
     "wave": [
      {
       "file": "acc_xmas_hat_wave_00.png",
@@ -8472,6 +8950,50 @@
      },
      {
       "file": "acc_party_hat_tug_05.png",
+      "at": [
+       143,
+       51
+      ]
+     }
+    ],
+    "pull": [
+     {
+      "file": "acc_party_hat_pull_00.png",
+      "at": [
+       198,
+       46
+      ]
+     },
+     {
+      "file": "acc_party_hat_pull_01.png",
+      "at": [
+       188,
+       50
+      ]
+     },
+     {
+      "file": "acc_party_hat_pull_02.png",
+      "at": [
+       177,
+       51
+      ]
+     },
+     {
+      "file": "acc_party_hat_pull_03.png",
+      "at": [
+       166,
+       49
+      ]
+     },
+     {
+      "file": "acc_party_hat_pull_04.png",
+      "at": [
+       156,
+       50
+      ]
+     },
+     {
+      "file": "acc_party_hat_pull_05.png",
       "at": [
        143,
        51
@@ -9236,6 +9758,50 @@
       ]
      }
     ],
+    "pull": [
+     {
+      "file": "acc_bow_pull_00.png",
+      "at": [
+       204,
+       81
+      ]
+     },
+     {
+      "file": "acc_bow_pull_01.png",
+      "at": [
+       196,
+       80
+      ]
+     },
+     {
+      "file": "acc_bow_pull_02.png",
+      "at": [
+       185,
+       80
+      ]
+     },
+     {
+      "file": "acc_bow_pull_03.png",
+      "at": [
+       173,
+       82
+      ]
+     },
+     {
+      "file": "acc_bow_pull_04.png",
+      "at": [
+       163,
+       81
+      ]
+     },
+     {
+      "file": "acc_bow_pull_05.png",
+      "at": [
+       152,
+       77
+      ]
+     }
+    ],
     "wave": [
      {
       "file": "acc_bow_wave_00.png",
@@ -9988,6 +10554,50 @@
      },
      {
       "file": "acc_orange_clip_tug_05.png",
+      "at": [
+       163,
+       77
+      ]
+     }
+    ],
+    "pull": [
+     {
+      "file": "acc_orange_clip_pull_00.png",
+      "at": [
+       210,
+       79
+      ]
+     },
+     {
+      "file": "acc_orange_clip_pull_01.png",
+      "at": [
+       203,
+       78
+      ]
+     },
+     {
+      "file": "acc_orange_clip_pull_02.png",
+      "at": [
+       194,
+       78
+      ]
+     },
+     {
+      "file": "acc_orange_clip_pull_03.png",
+      "at": [
+       183,
+       78
+      ]
+     },
+     {
+      "file": "acc_orange_clip_pull_04.png",
+      "at": [
+       172,
+       78
+      ]
+     },
+     {
+      "file": "acc_orange_clip_pull_05.png",
       "at": [
        163,
        77
@@ -10752,6 +11362,50 @@
       ]
      }
     ],
+    "pull": [
+     {
+      "file": "acc_lemon_clip_pull_00.png",
+      "at": [
+       208,
+       79
+      ]
+     },
+     {
+      "file": "acc_lemon_clip_pull_01.png",
+      "at": [
+       199,
+       78
+      ]
+     },
+     {
+      "file": "acc_lemon_clip_pull_02.png",
+      "at": [
+       189,
+       78
+      ]
+     },
+     {
+      "file": "acc_lemon_clip_pull_03.png",
+      "at": [
+       175,
+       78
+      ]
+     },
+     {
+      "file": "acc_lemon_clip_pull_04.png",
+      "at": [
+       168,
+       78
+      ]
+     },
+     {
+      "file": "acc_lemon_clip_pull_05.png",
+      "at": [
+       158,
+       78
+      ]
+     }
+    ],
     "wave": [
      {
       "file": "acc_lemon_clip_wave_00.png",
@@ -11510,6 +12164,50 @@
       ]
      }
     ],
+    "pull": [
+     {
+      "file": "acc_backpack_pull_00.png",
+      "at": [
+       312,
+       108
+      ]
+     },
+     {
+      "file": "acc_backpack_pull_01.png",
+      "at": [
+       307,
+       108
+      ]
+     },
+     {
+      "file": "acc_backpack_pull_02.png",
+      "at": [
+       305,
+       107
+      ]
+     },
+     {
+      "file": "acc_backpack_pull_03.png",
+      "at": [
+       300,
+       107
+      ]
+     },
+     {
+      "file": "acc_backpack_pull_04.png",
+      "at": [
+       297,
+       107
+      ]
+     },
+     {
+      "file": "acc_backpack_pull_05.png",
+      "at": [
+       293,
+       107
+      ]
+     }
+    ],
     "wave": [
      {
       "file": "acc_backpack_wave_00.png",
@@ -12262,6 +12960,50 @@
      },
      {
       "file": "acc_crown_tug_05.png",
+      "at": [
+       134,
+       69
+      ]
+     }
+    ],
+    "pull": [
+     {
+      "file": "acc_crown_pull_00.png",
+      "at": [
+       192,
+       70
+      ]
+     },
+     {
+      "file": "acc_crown_pull_01.png",
+      "at": [
+       175,
+       69
+      ]
+     },
+     {
+      "file": "acc_crown_pull_02.png",
+      "at": [
+       168,
+       69
+      ]
+     },
+     {
+      "file": "acc_crown_pull_03.png",
+      "at": [
+       154,
+       71
+      ]
+     },
+     {
+      "file": "acc_crown_pull_04.png",
+      "at": [
+       145,
+       70
+      ]
+     },
+     {
+      "file": "acc_crown_pull_05.png",
       "at": [
        134,
        69
@@ -13167,6 +13909,43 @@
      ]
     }
    ]
+  },
+  "wand_leaf": {
+   "label": "嫩叶",
+   "label_en": "Tender leaf",
+   "weight": 0,
+   "effect": null,
+   "minutes": 0,
+   "files": [
+    {
+     "file": "leaf_wand_leaf_0.png",
+     "at": [
+      40,
+      185
+     ]
+    },
+    {
+     "file": "leaf_wand_leaf_1.png",
+     "at": [
+      40,
+      185
+     ]
+    },
+    {
+     "file": "leaf_wand_leaf_2.png",
+     "at": [
+      40,
+      185
+     ]
+    },
+    {
+     "file": "leaf_wand_leaf_3.png",
+     "at": [
+      40,
+      185
+     ]
+    }
+   ]
   }
  },
  "scents": [
@@ -13205,6 +13984,40 @@
   "confetti_21.png",
   "confetti_22.png",
   "confetti_23.png"
+ ],
+ "toys": {
+  "wand": {
+   "label": "逗虫棒",
+   "label_en": "Leaf wand",
+   "price": 30,
+   "kind": "hand",
+   "points": {
+    "grip": [
+     210,
+     210
+    ],
+    "end": [
+     64.79999999999998,
+     95.6
+    ],
+    "tip": [
+     38.39999999999998,
+     144
+    ],
+    "stem": [
+     42.79999999999998,
+     130.8
+    ]
+   },
+   "file": "toy_wand.png",
+   "bare": "toy_wand_bare.png",
+   "leaf": "toy_wand_leaf.png"
+  }
+ },
+ "drops": [
+  "drop_0.png",
+  "drop_1.png",
+  "drop_2.png"
  ],
  "frass": "frass.png",
  "skin": {

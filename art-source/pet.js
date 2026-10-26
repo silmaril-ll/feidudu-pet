@@ -147,6 +147,8 @@ function buildAnims(body, angry, overlay){
   add('angry', [-1.4, 1.4, 0].map(dx => frame(angry, WARP.shake(dx))), FOOT);
   add('sleep', loop(8, i => frame(body, WARP.sleep(i / 8 * Math.PI * 2))), FOOT);
   add('tug', [0, .2, .4, .6, .8, 1].map(T => frame(angry, WARP.tug(T))), [OX + 112 * PS, GY]);
+  // 和逗虫棒拔河：同样的拉长，不冒臭角，嘟着嘴使劲（玩，不是生气）
+  add('pull', [0, .2, .4, .6, .8, 1].map(T => frame(pout(body), WARP.tug(T))), [OX + 112 * PS, GY]);
   // casting: 3 frames rising (played backwards to lower), then 8 frames swaying around
   const wave = [.2, .42, .6].map(th => frame(body, WARP.wave(th, 0)));
   loop(8, i => { const ph = i / 8 * Math.PI * 2; return frame(body, WARP.wave(.62 + .14 * Math.sin(ph), .2 * Math.cos(ph))); }).forEach(f => wave.push(f));
@@ -283,6 +285,13 @@ async function renderPet(){
     bubbles.push(['leaf_' + name, l.label + '！', Math.min(190, 60 + 34 * l.label.length)]);
     out.bubbles_en['leaf_' + name] = bubble((l.en || l.label) + '!', 0, true);
   });
+  // 逗虫棒上抢来的那片嫩叶：抢到以后趴着嚼（chase.py），和喂叶子一样 4 个咬了几口的样子。
+  // 不放进货架（items.js 的 LEAVES），抽不到；大小换算成和挂在线上时一样大（玩具 TS·1.1 倍 ÷ 吃叶子的 PS·0.56）
+  { const f = 1.75 * 2.2 * 1.1 / (PS * .56);
+    // 往嘴里挪一点：这片叶子两头尖，不挪看着像没叼住
+    const parts = place(WAND_LEAF(), -24, 0, 0, f).map(q => q.line ? Object.assign({}, q, { lw: 1.1 }) : q);
+    out.leaves.wand_leaf = { label: '嫩叶', label_en: 'Tender leaf', weight: 0, effect: null, minutes: 0,
+      frames: [0, 1, 2, 3].map(stage => { const c = ART.mk(PW, PH); leafBitten(c.getContext('2d'), stage, parts); return c.toDataURL('image/png'); }) }; }
   out.sparkles = [sparkle('#f6d86b', 1.7), sparkle('#fff6c8', 1.3), sparkle('#fbe7a0', 1)];
   out.scents = [.9, 1.1, 1.3].map((k, i) => {               // 芸香叶：身边飘起来的一缕缕香味
     const c = ART.mk(40, 56);
@@ -294,7 +303,31 @@ async function renderPet(){
   for (let n = 100; n <= 3000; n += 100) { bubbles.push(['leaves_' + n, '第' + n + '片！', 44 + 24 * ('第' + n + '片！').length]); BUBBLES_EN['leaves_' + n] = 'Leaf #' + n + '!'; }
   bubbles.push(['leaves_more', '又一百片！', 190]); BUBBLES_EN.leaves_more = 'Another hundred!';
   bubbles.push(['hooray', '撒花～', 134]); BUBBLES_EN.hooray = 'Hooray!';
+  // 玩具
+  [['got_it', '抢到了！', 150, 'Got it!'], ['wait', '等等我～', 150, 'Wait for me~'], ['grr', '嗯——！', 134, 'Mmmph—!'],
+   ['gulp', '咕嘟咕嘟', 160, 'Gulp gulp'], ['quenched', '解渴～', 134, 'Refreshing~'], ['dew', '露水！', 118, 'Dew!'],
+   ['tired', '玩累了…', 150, 'Tired now…'], ['play', '来玩呀！', 150, "Let's play!"]]
+    .forEach(b => { bubbles.push([b[0], b[1], b[2]]); BUBBLES_EN[b[0]] = b[3]; });
   out.popper = popperPic();
+  // 玩具：每样一张画，画面坐标里的几个点（points）换算成画布上的像素，程序拿去对齐
+  const TS = 2.2, TC = 210;                  // 放大倍数；画布 420×420，原点在正中间
+  out.toys = {};
+  Object.keys(TOYS).forEach(name => {
+    const toy = TOYS[name], c = ART.mk(2 * TC, 2 * TC);
+    ART.figure(c.getContext('2d'), toy.parts(), { x: TC, y: TC, s: TS, r: 0 }, Object.assign({}, PO, { seed: 300 + name.length, border: 6, lineS: 2.2 }));
+    const pts = {};
+    Object.keys(toy.points).forEach(k => { const v = toy.points[k]; pts[k] = Array.isArray(v) ? [TC + v[0] * TS, TC + v[1] * TS] : v * TS; });
+    out.toys[name] = { label: toy.label, label_en: toy.en, price: toy.price, kind: toy.kind, points: pts, file: c.toDataURL('image/png') };
+  });
+  // 逗虫棒的叶子被咬走以后：只剩树枝（bare）；拔河时叶子咬在它嘴里，单独画一张只有叶子的（leaf），线程序里画
+  { const c = ART.mk(2 * TC, 2 * TC); ART.figure(c.getContext('2d'), TOYS.wand.parts().slice(0, 1), { x: TC, y: TC, s: TS, r: 0 }, Object.assign({}, PO, { seed: 304, border: 6, lineS: 2.2 }));
+    out.toys.wand.bare = c.toDataURL('image/png'); }
+  { const c = ART.mk(2 * TC, 2 * TC); ART.figure(c.getContext('2d'), TOYS.wand.parts().slice(2), { x: TC, y: TC, s: TS, r: 0 }, Object.assign({}, PO, { seed: 305, border: 6, lineS: 2.2 }));
+    out.toys.wand.leaf = c.toDataURL('image/png'); }
+  // 水雾的小水珠
+  out.drops = [1, .8, .6].map((k, i) => { const c = ART.mk(24, 30);
+    ART.figure(c.getContext('2d'), [{ d: 'M0,-6 C3,-1 4,2 0,5 C-4,2 -3,-1 0,-6 Z', fill: ['#a9d4ec', '#c4e3f3', '#8cc5e6'][i], lw: .8, hatchK: .3 }], { x: 12, y: 15, s: 2 * k, r: 0 }, Object.assign({}, PO, { seed: 320 + i, border: 2, lineS: 1 }));
+    return c.toDataURL('image/png'); });
   out.confetti = confettiPics();
   bubbles.forEach(b => { out.bubbles[b[0]] = bubble(b[1], b[2]); });
   Object.keys(BUBBLES_EN).forEach(k => { out.bubbles_en[k] = bubble(BUBBLES_EN[k], 0, true); });

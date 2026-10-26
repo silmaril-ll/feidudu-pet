@@ -12,7 +12,7 @@ from .base import Behavior
 from ..config import CLING_CALM, CLING_SPEED, FLING_SHAKES, FLING_SPEED, FLING_WINDOW
 
 # 这些时候被拖走才会抓紧；吃东西、挑食、吊着、被拎着这些时候就不管它
-CLING_FROM = {"idle", "crawl", "wave", "wiggle", "angry", "sleep", "comfy", "approach", "snake", "look", "peek"}
+CLING_FROM = {"idle", "crawl", "wave", "wiggle", "angry", "sleep", "comfy", "approach", "snake", "look", "peek", "chase"}
 
 
 def hold_on(pet):

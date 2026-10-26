@@ -34,6 +34,16 @@ class Sprites:
         self.frass = self._load(info["frass"])                    # 一颗便便
         self.popper = self._load(info["popper"])                  # 礼花筒（每吃满一百片叶子，见 confetti.py）
         self.confetti = [self._load(f) for f in info["confetti"]]  # 彩纸、彩带
+        # 玩具：每样一张画（逗虫棒还有一张叶子被咬走的），points 是画面里要对齐的几个点（逻辑像素）
+        r = self.ratio
+        self.toys = {}
+        for name, toy in info.get("toys", {}).items():
+            pts = {k: (QPointF(v[0] / r, v[1] / r) if isinstance(v, list) else v / r) for k, v in toy["points"].items()}
+            self.toys[name] = {"label": toy.get("label_en", toy["label"]) if EN else toy["label"], "price": toy["price"],
+                               "kind": toy["kind"], "points": pts, "pix": self._load(toy["file"]),
+                               "bare": self._load(toy["bare"]) if "bare" in toy else None,
+                               "leaf": self._load(toy["leaf"]) if "leaf" in toy else None}
+        self.drops = [self._load(f) for f in info.get("drops", [])]   # 喷壶的小水珠
         # 小卖部（货架在 art-source/items.js）：饰品是每个动作上面的一层，叶子是吃的时候垫在下面的一层
         self.shop = info["shop"]
         #   这两种画面只存了有画的那一块：每帧是 (画面, 放在哪)
